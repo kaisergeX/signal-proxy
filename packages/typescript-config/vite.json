@@ -1,0 +1,4 @@
+{
+  "extends": "./base.json",
+  "exclude": ["node_modules"]
+}

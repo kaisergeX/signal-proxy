@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+
+@theme {
+  --default-font-family: 'Nunito';
+}
+
+@utility button-base {
+  @apply inline-flex cursor-pointer items-center gap-2 rounded-md border border-solid py-2.5 px-3.5 align-top text-sm font-semibold leading-normal shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:focus-visible:outline-zinc-400;
+
+  &:disabled {
+    @apply pointer-events-none cursor-not-allowed opacity-50;
+  }
+
+  &:has(:not(:only-child)) {
+    /* apply styles to .button-base that has more than 1 child */
+    @apply h-11;
+  }
+}
+
+@utility bg-primary {
+  @apply bg-neutral-50 dark:bg-zinc-800;
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+
+@utility flex-center-between {
+  @apply flex items-center justify-between;
+}
+
+@layer base {
+  body,
+  html,
+  #root {
+    @apply h-full scroll-smooth;
+  }
+
+  body {
+    @apply antialiased;
+  }
+
+  h1 {
+    @apply text-xl font-bold sm:text-2xl xl:text-4xl;
+  }
+
+  h2 {
+    @apply text-lg font-semibold sm:text-xl xl:text-2xl;
+  }
+
+  h3 {
+    @apply font-semibold sm:text-lg;
+  }
+}
+
+@layer utilities {
+}
+
+@layer components {
+  .button {
+    @apply button-base border-zinc-900 bg-zinc-900 text-white hover:bg-transparent hover:text-zinc-900 focus-visible:hover:border-transparent dark:border-transparent dark:bg-zinc-300 dark:text-black hover:dark:bg-zinc-100;
+  }
+
+  .button-secondary {
+    @apply button-base border-zinc-200 bg-transparent text-inherit hover:border-zinc-900 hover:text-inherit dark:border-zinc-600 dark:hover:border-zinc-200;
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "playground",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "tsc --noEmit && eslint src --report-unused-disable-directives --max-warnings 0 && prettier --check \"src/**/*.{ts,tsx,scss}\"",
+    "preview": "vite preview"
+  },
+  "imports": {
+    "#*": "./src/*/index.ts",
+    "#*/": "./src/*"
+  },
+  "dependencies": {
+    "@repo/signal": "workspace:*",
+    "@tabler/icons-react": "^3.12.0",
+    "@tailwindcss/vite": "4.0.0-alpha.19",
+    "@tanstack/react-query": "^5.52.0",
+    "@tanstack/react-router": "^1.49.1",
+    "axios": "^1.7.4",
+    "clsx": "^2.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss": "4.0.0-alpha.19"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@tanstack/eslint-plugin-query": "^5.52.0",
+    "@tanstack/router-devtools": "^1.49.1",
+    "@tanstack/router-plugin": "^1.48.6",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "prettier": "^3.3.3",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1"
+  }
+}
