@@ -2,7 +2,7 @@ on:
   - pull_request
 
 jobs:
-  cache-and-install:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -12,7 +12,6 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9
           run_install: false
 
       - name: Install Node.js
