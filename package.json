@@ -8,7 +8,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clean": "turbo run clean && rm -rf node_modules",
-    "publish-packages": "turbo run build lint --filter=./packages/signal && changeset version && changeset publish"
+    "publish-signal": "turbo run build lint --filter=./packages/signal && changeset publish"
   },
   "type": "module",
   "devDependencies": {
