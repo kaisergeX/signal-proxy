@@ -3,7 +3,7 @@
 ## Apps and Packages
 
 - `playground`: Signal playground
-- `@repo/signal`: Signal core implementation
+- `@kaiverse/signal`: Signal core implementation
 - `@repo/typescript-config`: Typescript configs used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).

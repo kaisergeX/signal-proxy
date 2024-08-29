@@ -1,7 +1,13 @@
 {
-  "name": "@repo/signal",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@kaiverse/signal",
+  "version": "0.1.0",
+  "bugs": {
+    "url": "https://github.com/kaisergeX/signal-proxy/issues"
+  },
+  "homepage": "https://github.com/kaisergeX/signal-proxy",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "files": [
     "dist"

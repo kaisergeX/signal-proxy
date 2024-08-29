@@ -6,7 +6,9 @@
     "build:pkgs": "turbo build --filter=./packages/*",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "publish-packages": "turbo run build lint --filter=./packages/signal && changeset version && changeset publish"
   },
   "type": "module",
   "devDependencies": {

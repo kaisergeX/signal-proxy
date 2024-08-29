@@ -5,7 +5,7 @@ import {
   type Signal,
   type SignalFactoryReturnType,
   type SignalOptions,
-} from '@repo/signal';
+} from '@kaiverse/signal';
 import {useEffect, useMemo, useReducer, type EffectCallback} from 'react';
 
 /**
