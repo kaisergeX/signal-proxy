@@ -1,4 +1,4 @@
-import {createEffect} from '@repo/signal';
+import {createEffect} from '@kaiverse/signal';
 import {playgroundSignal} from '../-utils/store';
 import {useComputed} from '#hooks';
 

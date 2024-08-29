@@ -17,6 +17,12 @@ importers:
       eslint:
         specifier: ^9.9.0
         version: 9.9.1
+      eslint-plugin-react-hooks:
+        specifier: ^5.1.0-rc.0
+        version: 5.1.0-rc-fb9a90fa48-20240614(eslint@9.9.1)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.9
+        version: 0.4.11(eslint@9.9.1)
       globals:
         specifier: ^15.9.0
         version: 15.9.0
@@ -35,7 +41,7 @@ importers:
 
   apps/playground:
     dependencies:
-      '@repo/signal':
+      '@kaiverse/signal':
         specifier: workspace:*
         version: link:../../packages/signal
       '@tabler/icons-react':
@@ -44,9 +50,6 @@ importers:
       '@tailwindcss/vite':
         specifier: 4.0.0-alpha.19
         version: 4.0.0-alpha.19(postcss@8.4.41)(vite@5.4.2(@types/node@22.5.1)(lightningcss@1.26.0))
-      '@tanstack/react-query':
-        specifier: ^5.52.0
-        version: 5.52.2(react@18.3.1)
       '@tanstack/react-router':
         specifier: ^1.49.1
         version: 1.51.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -72,9 +75,6 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@tanstack/eslint-plugin-query':
-        specifier: ^5.52.0
-        version: 5.52.0(eslint@9.9.1)(typescript@5.5.4)
       '@tanstack/router-devtools':
         specifier: ^1.49.1
         version: 1.51.2(@tanstack/react-router@1.51.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -93,12 +93,6 @@ importers:
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@9.9.1)
-      eslint-plugin-react-hooks:
-        specifier: ^5.1.0-rc.0
-        version: 5.1.0-rc-fb9a90fa48-20240614(eslint@9.9.1)
-      eslint-plugin-react-refresh:
-        specifier: ^0.4.9
-        version: 0.4.11(eslint@9.9.1)
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -768,22 +762,9 @@ packages:
     peerDependencies:
       vite: ^5.2.0
 
-  '@tanstack/eslint-plugin-query@5.52.0':
-    resolution: {integrity: sha512-i02fOM3TRURI46AswPNlKb4Gwu+/mAPssI+pVu0AifA7/qzOJRgco17vdqjq/VgChKLLIltd9/KI4MCJFFfWEw==}
-    peerDependencies:
-      eslint: ^8 || ^9
-
   '@tanstack/history@1.49.7':
     resolution: {integrity: sha512-9e9e+QFeWve6rB5BWK9MR8/1BmQYd1LFmM5BYh1Ht15yLcyU0FoiPG4Iun9Coc3Obo1mA+NbYCoOYoSZ+h+9yw==}
     engines: {node: '>=12'}
-
-  '@tanstack/query-core@5.52.2':
-    resolution: {integrity: sha512-9vvbFecK4A0nDnrc/ks41e3UHONF1DAnGz8Tgbxkl59QcvKWmc0ewhYuIKRh8NC4ja5LTHT9EH16KHbn2AIYWA==}
-
-  '@tanstack/react-query@5.52.2':
-    resolution: {integrity: sha512-d4OwmobpP+6+SvuAxW1RzAY95Pv87Gu+0GjtErzFOUXo+n0FGcwxKvzhswCsXKxsgnAr3bU2eJ2u+GXQAutkCQ==}
-    peerDependencies:
-      react: ^18 || ^19
 
   '@tanstack/react-router@1.51.2':
     resolution: {integrity: sha512-m4eIS4h8tGLtYJ6C75nKZe32yB8SjL23LUKlsJiEIMHkpkYMfsCI09qqEiPxL/5vEqVNNNS13LbAIzMiX8Yu3A==}
@@ -885,10 +866,6 @@ packages:
       typescript:
         optional: true
 
-  '@typescript-eslint/scope-manager@8.0.0-alpha.30':
-    resolution: {integrity: sha512-FGW/iPWGyPFamAVZ60oCAthMqQrqafUGebF8UKuq/ha+e9SVG6YhJoRzurlQXOVf8dHfOhJ0ADMXyFnMc53clg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@typescript-eslint/scope-manager@8.3.0':
     resolution: {integrity: sha512-mz2X8WcN2nVu5Hodku+IR8GgCOl4C0G/Z1ruaWN4dgec64kDBabuXyPAr+/RgJtumv8EEkqIzf3X2U5DUKB2eg==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -902,22 +879,9 @@ packages:
       typescript:
         optional: true
 
-  '@typescript-eslint/types@8.0.0-alpha.30':
-    resolution: {integrity: sha512-4WzLlw27SO9pK9UFj/Hu7WGo8WveT0SEiIpFVsV2WwtQmLps6kouwtVCB8GJPZKJyurhZhcqCoQVQFmpv441Vg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@typescript-eslint/types@8.3.0':
     resolution: {integrity: sha512-y6sSEeK+facMaAyixM36dQ5NVXTnKWunfD1Ft4xraYqxP0lC0POJmIaL/mw72CUMqjY9qfyVfXafMeaUj0noWw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@typescript-eslint/typescript-estree@8.0.0-alpha.30':
-    resolution: {integrity: sha512-WSXbc9ZcXI+7yC+6q95u77i8FXz6HOLsw3ST+vMUlFy1lFbXyFL/3e6HDKQCm2Clt0krnoCPiTGvIn+GkYPn4Q==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      typescript: '*'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
 
   '@typescript-eslint/typescript-estree@8.3.0':
     resolution: {integrity: sha512-Mq7FTHl0R36EmWlCJWojIC1qn/ZWo2YiWYc1XVtasJ7FIgjo0MVv9rZWXEE7IK2CGrtwe1dVOxWwqXUdNgfRCA==}
@@ -928,21 +892,11 @@ packages:
       typescript:
         optional: true
 
-  '@typescript-eslint/utils@8.0.0-alpha.30':
-    resolution: {integrity: sha512-rfhqfLqFyXhHNDwMnHiVGxl/Z2q/3guQ1jLlGQ0hi9Rb7inmwz42crM+NnLPR+2vEnwyw1P/g7fnQgQ3qvFx4g==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^8.57.0 || ^9.0.0
-
   '@typescript-eslint/utils@8.3.0':
     resolution: {integrity: sha512-F77WwqxIi/qGkIGOGXNBLV7nykwfjLsdauRB/DOFPdv6LTF3BHHkBpq81/b5iMPSF055oO2BiivDJV4ChvNtXA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
-
-  '@typescript-eslint/visitor-keys@8.0.0-alpha.30':
-    resolution: {integrity: sha512-XZuNurZxBqmr6ZIRIwWFq7j5RZd6ZlkId/HZEWyfciK+CWoyOxSF9Pv2VXH9Rlu2ZG2PfbhLz2Veszl4Pfn7yA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@typescript-eslint/visitor-keys@8.3.0':
     resolution: {integrity: sha512-RmZwrTbQ9QveF15m/Cl28n0LXD6ea2CjkhH5rQ55ewz3H24w+AMCJHPVYaZ8/0HoG8Z3cLLFFycRXxeO2tz9FA==}
@@ -2906,22 +2860,7 @@ snapshots:
       - tsx
       - yaml
 
-  '@tanstack/eslint-plugin-query@5.52.0(eslint@9.9.1)(typescript@5.5.4)':
-    dependencies:
-      '@typescript-eslint/utils': 8.0.0-alpha.30(eslint@9.9.1)(typescript@5.5.4)
-      eslint: 9.9.1
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-
   '@tanstack/history@1.49.7': {}
-
-  '@tanstack/query-core@5.52.2': {}
-
-  '@tanstack/react-query@5.52.2(react@18.3.1)':
-    dependencies:
-      '@tanstack/query-core': 5.52.2
-      react: 18.3.1
 
   '@tanstack/react-router@1.51.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -3055,11 +2994,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/scope-manager@8.0.0-alpha.30':
-    dependencies:
-      '@typescript-eslint/types': 8.0.0-alpha.30
-      '@typescript-eslint/visitor-keys': 8.0.0-alpha.30
-
   '@typescript-eslint/scope-manager@8.3.0':
     dependencies:
       '@typescript-eslint/types': 8.3.0
@@ -3077,24 +3011,7 @@ snapshots:
       - eslint
       - supports-color
 
-  '@typescript-eslint/types@8.0.0-alpha.30': {}
-
   '@typescript-eslint/types@8.3.0': {}
-
-  '@typescript-eslint/typescript-estree@8.0.0-alpha.30(typescript@5.5.4)':
-    dependencies:
-      '@typescript-eslint/types': 8.0.0-alpha.30
-      '@typescript-eslint/visitor-keys': 8.0.0-alpha.30
-      debug: 4.3.6
-      globby: 11.1.0
-      is-glob: 4.0.3
-      minimatch: 9.0.5
-      semver: 7.6.3
-      ts-api-utils: 1.3.0(typescript@5.5.4)
-    optionalDependencies:
-      typescript: 5.5.4
-    transitivePeerDependencies:
-      - supports-color
 
   '@typescript-eslint/typescript-estree@8.3.0(typescript@5.5.4)':
     dependencies:
@@ -3111,17 +3028,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@8.0.0-alpha.30(eslint@9.9.1)(typescript@5.5.4)':
-    dependencies:
-      '@eslint-community/eslint-utils': 4.4.0(eslint@9.9.1)
-      '@typescript-eslint/scope-manager': 8.0.0-alpha.30
-      '@typescript-eslint/types': 8.0.0-alpha.30
-      '@typescript-eslint/typescript-estree': 8.0.0-alpha.30(typescript@5.5.4)
-      eslint: 9.9.1
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-
   '@typescript-eslint/utils@8.3.0(eslint@9.9.1)(typescript@5.5.4)':
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.9.1)
@@ -3132,11 +3038,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
-
-  '@typescript-eslint/visitor-keys@8.0.0-alpha.30':
-    dependencies:
-      '@typescript-eslint/types': 8.0.0-alpha.30
-      eslint-visitor-keys: 3.4.3
 
   '@typescript-eslint/visitor-keys@8.3.0':
     dependencies:
