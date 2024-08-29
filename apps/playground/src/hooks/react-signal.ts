@@ -72,6 +72,7 @@ export const useComputed = <T>(factory: () => T): Signal<T> => {
         forceUpdate();
         return factory();
       }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 };

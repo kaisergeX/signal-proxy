@@ -8,6 +8,7 @@
   ],
   "main": "./dist/signal.umd.cjs",
   "module": "./dist/signal.js",
+  "types": "./dist/signal.d.ts",
   "exports": {
     ".": {
       "import": "./dist/signal.js",
@@ -17,6 +18,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "lint": "tsc --noEmit && eslint src --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "devDependencies": {
