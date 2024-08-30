@@ -2,7 +2,7 @@
 
 import {signalProxy} from './core';
 import type {
-  EffectCallback,
+  SignalEffect,
   EffectTracking,
   Signal,
   SignalFactoryReturnType,
@@ -17,7 +17,7 @@ let effectTracking: EffectTracking | null = null;
  *
  * @param untrackEffectCb
  */
-export function unTrack(untrackEffectCb: EffectCallback) {
+export function unTrack(untrackEffectCb: SignalEffect) {
   const prevEffectTracking = effectTracking;
   effectTracking = null;
   const untrackEffectExecute = untrackEffectCb();
@@ -86,7 +86,7 @@ export function createSignal<T>(
  * @param effectCb Imperative function that will run whenever dependencies change. Dependencies are Signals that are used inside the Effect itself
  * @returns a cleanup function. It will stop related Effect.
  */
-export function createEffect(effect: EffectCallback) {
+export function createEffect(effect: SignalEffect) {
   const effectDetail: EffectTracking = {
     execute: () => {
       cleanupEffect(effectDetail);

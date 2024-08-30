@@ -32,6 +32,5 @@ export type SignalOptions<T> = {
   onChange?: (newValue: T) => void;
 };
 export type SignalFactoryReturnType<T> = Readonly<[get: Signal<T>, set: SignalSetter<T>]>;
-
-export type EffectCallback = () => void;
-export type EffectTracking = {execute: EffectCallback; deps: Set<Set<EffectTracking>>};
+export type SignalEffect = () => void;
+export type EffectTracking = {execute: SignalEffect; deps: Set<Set<EffectTracking>>};
