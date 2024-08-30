@@ -3,10 +3,11 @@ import {
   createEffect,
   createSignal,
   type Signal,
+  type SignalEffect,
   type SignalFactoryReturnType,
   type SignalOptions,
 } from '@kaiverse/signal';
-import {useEffect, useMemo, useReducer, type EffectCallback} from 'react';
+import {useEffect, useMemo, useReducer} from 'react';
 
 /**
  * Use `Signal` inside React component.
@@ -45,7 +46,7 @@ export function useSignal<T>(
  * Signal effect inside a React component.
  * @param effect Imperative function that will run whenever dependencies change. Dependencies are Signals that are used inside the Effect itself.
  */
-export const useSignalEffect = (effect: EffectCallback) => {
+export const useSignalEffect = (effect: SignalEffect) => {
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
