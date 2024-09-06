@@ -6,7 +6,6 @@ import {
   type ErrorComponentProps,
 } from '@tanstack/react-router';
 import {TanStackRouterDevtools} from '@tanstack/router-devtools';
-import {IconHome} from '@tabler/icons-react';
 
 export const Route = createRootRoute({
   component: RootPage,
@@ -43,7 +42,7 @@ function RootErrorComponent({error}: ErrorComponentProps) {
           Retry
         </button>
         <Link to="/" className="button">
-          <IconHome size={20} /> Go home
+          🏡 Go home
         </Link>
       </div>
     </div>

@@ -1,5 +1,12 @@
 # @kaiverse/signal
 
+## 0.2.0
+
+### Minor Changes
+
+- 34bb45c: update Effect type to avoid incorrect imported from React's effect type
+- eb36183: exports the core `signalProxy`, update README
+
 ## 0.1.0
 
 ### Minor Changes

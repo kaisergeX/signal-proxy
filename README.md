@@ -1,6 +1,11 @@
-# Signal Proxy
+[![npm](https://img.shields.io/npm/v/@kaiverse/signal)](https://www.npmjs.com/package/@kaiverse/signal)
+[![.github/workflows/ci.yml](https://github.com/kaisergeX/signal-proxy/actions/workflows/ci.yml/badge.svg)](https://github.com/kaisergeX/signal-proxy/actions/workflows/ci.yml)
 
-A simple reactive system for your Javascript application. TypeScript fully supported.
+<div align="center">
+<h1>Signal Proxy</h1>
+
+<p>A simple reactive system for your Javascript application.<br/>Zero dependency, TypeScript fully supported.</p>
+</div>
 
 [JS Signals proposal](https://github.com/tc39/proposal-signals) is currently in Stage 1. This package draws strong inspiration from [KnockoutJS](https://github.com/knockout/knockout)'s concepts and [SolidJS](https://github.com/solidjs)'s Signal, enabling us to use Signals in vanilla JavaScript.
 
@@ -107,8 +112,6 @@ createEffect(() => {
   console.log('[computed] doubled =', doubled());
 });
 ```
-
-
 
 ## Framework ports?
 
