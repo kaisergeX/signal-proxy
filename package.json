@@ -1,6 +1,7 @@
 {
   "name": "signal-proxy",
   "private": true,
+  "repository": "https://github.com/kaisergeX/signal-proxy.git",
   "scripts": {
     "build": "turbo build",
     "build:pkgs": "turbo build --filter=./packages/*",
@@ -8,7 +9,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clean": "turbo run clean && rm -rf node_modules",
-    "publish-signal": "turbo run build lint --filter=./packages/signal && changeset publish"
+    "publish-signal": "turbo run build lint --filter=./packages/signal && pnpm publish --filter './packages/signal' --access public && changeset tag"
   },
   "type": "module",
   "devDependencies": {
