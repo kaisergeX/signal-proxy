@@ -1,6 +1,6 @@
 name: 'Feature request'
 description: A request to update or improve the library
-title: 'Request: '
+title: '[Request] '
 labels: ['enhancement']
 body:
   - type: markdown
@@ -19,7 +19,7 @@ body:
     attributes:
       label: Are there any relevant context or insights that might assist us?
       description: A clear description of any added context, insights, or resources that might help us understand and improve it.
-  - type: input
+  - type: textarea
     attributes:
       label: What do you expect the usage to look like?
       description: 'Example: We can create custom hooks to match the React reactivity hooks semantically like `some example block code`...'
