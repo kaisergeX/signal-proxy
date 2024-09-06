@@ -61,7 +61,7 @@ document.querySelector<HTMLDivElement>('#root')!.innerHTML = `
 `;
 
 document.querySelector<HTMLButtonElement>('#counter')?.addEventListener('click', () => {
-  signal.prop2 = signal.prop2 + 1;
+  signal.prop2++;
   setCount((v) => v + 1);
 });
 
