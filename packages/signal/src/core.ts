@@ -4,7 +4,7 @@ export function signalProxy<T extends ObjectAny = ObjectAny>(
   target: T,
   callback: SignalUpdateCallback<T>,
   equals: SignalCompareEqual<T> = Object.is,
-) {
+): T {
   const handler: ProxyHandler<T> = {
     get(target, prop, receiver) {
       return Reflect.get(target, prop, receiver);

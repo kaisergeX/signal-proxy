@@ -34,3 +34,4 @@ export type SignalOptions<T> = {
 export type SignalFactoryReturnType<T> = Readonly<[get: Signal<T>, set: SignalSetter<T>]>;
 export type SignalEffect = () => void;
 export type EffectTracking = {execute: SignalEffect; deps: Set<Set<EffectTracking>>};
+export type CleanupEffectFn = () => void;
