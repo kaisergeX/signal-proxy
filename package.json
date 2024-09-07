@@ -9,7 +9,8 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clean": "turbo run clean && rm -rf node_modules",
-    "publish-signal": "turbo run build lint --filter=./packages/signal && pnpm publish --filter './packages/signal' --access public && changeset tag"
+    "publish": "turbo run build lint --filter=./packages/signal && pnpm publish --filter './packages/signal' --access public && changeset tag",
+    "publish:jsr": "cd ./packages/signal && pnpm dlx jsr publish"
   },
   "type": "module",
   "devDependencies": {
