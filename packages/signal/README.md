@@ -52,7 +52,7 @@ Signal is a [**Proxy**](https://developer.mozilla.org/docs/Web/JavaScript/Refere
 
 ## Example
 
-[Playground source code](src/playground/index.ts)
+[Playground source code](https://github.com/kaisergeX/signal-proxy/blob/main/packages/signal/src/playground/index.ts)
 
 ### Use Signal Proxy
 
@@ -102,6 +102,7 @@ setInterval(() => {
 }, 1000);
 
 createEffect(() => {
+  // log the count signal's value to the console every 1 second
   console.log('count =', count());
 });
 
@@ -116,4 +117,8 @@ createEffect(() => {
 
 ### React
 
-[Experimental] [React signal hooks](../../apps/playground/src/hooks/react-signal.ts) implementation ([React playground source code](../../apps/playground/src/routes/signal/route.lazy.tsx)). **DO NOT** use in production.<br/><small>Those hooks work, but its lack of testing and seems that the usage of memory is inefficient. An alternative approach may be better. Please feel free to open PRs. Your contributions are welcomed and appreciated.</small>
+[Experimental] [React signal hooks](https://github.com/kaisergeX/signal-proxy/blob/main/apps/playground/src/hooks/react-signal.ts) implementation. **DO NOT** use in production.
+
+<small>Those hooks work, but its lack of testing and seems that the usage of memory is inefficient. An alternative approach may be better. Please feel free to open PRs. Your contributions are welcomed and appreciated.</small>
+
+[React playground source code](https://github.com/kaisergeX/signal-proxy/blob/main/apps/playground/src/routes/signal/route.lazy.tsx)
