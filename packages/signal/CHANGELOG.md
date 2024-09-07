@@ -1,5 +1,11 @@
 # @kaiverse/signal
 
+## 0.2.1
+
+### Patch Changes
+
+- 86b8a57: Add MIT LICENSE, JSR config
+
 ## 0.2.0
 
 ### Minor Changes
