@@ -8,6 +8,7 @@ import type {
   SignalFactoryReturnType,
   SignalOptions,
   SignalSetter,
+  CleanupEffectFn,
 } from './types';
 
 let effectTracking: EffectTracking | null = null;
@@ -17,7 +18,7 @@ let effectTracking: EffectTracking | null = null;
  *
  * @param untrackEffectCb
  */
-export function unTrack(untrackEffectCb: SignalEffect) {
+export function unTrack(untrackEffectCb: SignalEffect): void {
   const prevEffectTracking = effectTracking;
   effectTracking = null;
   const untrackEffectExecute = untrackEffectCb();
@@ -86,7 +87,7 @@ export function createSignal<T>(
  * @param effectCb Imperative function that will run whenever dependencies change. Dependencies are Signals that are used inside the Effect itself
  * @returns a cleanup function. It will stop related Effect.
  */
-export function createEffect(effect: SignalEffect) {
+export function createEffect(effect: SignalEffect): CleanupEffectFn {
   const effectDetail: EffectTracking = {
     execute: () => {
       cleanupEffect(effectDetail);
@@ -115,7 +116,7 @@ export function createEffect(effect: SignalEffect) {
  *
  * @returns Computed Signal - a derived value in many reactive computations via Signal(s)
  */
-export function createComputed<T>(computedCb: () => T) {
+export function createComputed<T>(computedCb: () => T): Signal<T> {
   const [computedSignal, setComputedSignal] = createSignal(computedCb());
   createEffect(() => setComputedSignal(computedCb()));
   return computedSignal;
