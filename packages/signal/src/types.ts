@@ -18,7 +18,10 @@ export type SignalSetter<in out T> = {
   ): undefined extends T ? undefined : U;
   (value: T | SignalSetterCb<T>): T;
 };
+
+/** Signals value getter. */
 export type Signal<T> = () => T;
+/** Signal options */
 export type SignalOptions<T> = {
   /**
    * Customize Signal comparison
@@ -31,7 +34,9 @@ export type SignalOptions<T> = {
   /** Runs whenever Signal value changes */
   onChange?: (newValue: T) => void;
 };
+/** Return type of a Signal */
 export type SignalFactoryReturnType<T> = Readonly<[get: Signal<T>, set: SignalSetter<T>]>;
+/** An Effect that runs whenever its dependencies change. */
 export type SignalEffect = () => void;
 export type EffectTracking = {execute: SignalEffect; deps: Set<Set<EffectTracking>>};
 export type CleanupEffectFn = () => void;

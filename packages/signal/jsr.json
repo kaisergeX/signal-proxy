@@ -1,5 +1,13 @@
 {
     "name": "@kaiverse/signal",
-    "version": "0.2.1",
-    "exports": "./src/index.ts"
+    "version": "0.2.1+001",
+    "exports": "./src/index.ts",
+    "publish": {
+        "exclude": [
+            "vite.config.ts",
+            "tsconfig.json",
+            "index.html",
+            "./src/vite-env.d.ts"
+        ]
+    }
 }

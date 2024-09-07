@@ -10,7 +10,7 @@
 
 ## Installation
 
-Via `npmjs`
+### Via `npmjs`
 
 ```
 npm i @kaiverse/signal
@@ -22,25 +22,25 @@ or
 pnpm add @kaiverse/signal
 ```
 
-Via `jsr`
+### Via `jsr`
 
-<details>
-  <summary> (Not available yet)</summary>
-  
 ```
 deno add @kaiverse/signal
 ```
+
 or
+
 ```
 npx jsr add @kaiverse/signal
 ```
+
 or
+
 ```
 pnpm dlx jsr add @kaiverse/signal
 ```
-</details><br/>
 
-Via `unpkg` CDN:
+### Via `unpkg` CDN:
 
 ```
 unpkg.com/@kaiverse/signal
@@ -114,4 +114,6 @@ createEffect(() => {
 
 ## Framework ports?
 
-- [Experimental] [React signal hooks](../../apps/playground/src/hooks/react-signal.ts) implementation ([React playground source code](../../apps/playground/src/routes/signal/route.lazy.tsx)). **DO NOT** use in production.<br/><small>Those hooks work, but its lack of testing and seems that the usage of memory is inefficient. An alternative approach may be better. Please feel free to open PRs. Your contributions are welcomed and appreciated.</small>
+### React
+
+[Experimental] [React signal hooks](../../apps/playground/src/hooks/react-signal.ts) implementation ([React playground source code](../../apps/playground/src/routes/signal/route.lazy.tsx)). **DO NOT** use in production.<br/><small>Those hooks work, but its lack of testing and seems that the usage of memory is inefficient. An alternative approach may be better. Please feel free to open PRs. Your contributions are welcomed and appreciated.</small>

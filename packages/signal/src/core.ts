@@ -1,7 +1,8 @@
 import type {ObjectAny, SignalCompareEqual, SignalUpdateCallback} from './types';
 
+/** Create a Signal Proxy. It track a `initialValue` object that changes over time. */
 export function signalProxy<T extends ObjectAny = ObjectAny>(
-  target: T,
+  initialValue: T,
   callback: SignalUpdateCallback<T>,
   equals: SignalCompareEqual<T> = Object.is,
 ): T {
@@ -20,5 +21,5 @@ export function signalProxy<T extends ObjectAny = ObjectAny>(
     },
   };
 
-  return new Proxy(target, handler);
+  return new Proxy(initialValue, handler);
 }
