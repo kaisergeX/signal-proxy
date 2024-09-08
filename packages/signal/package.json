@@ -4,6 +4,13 @@
   "description": "A simple reactive system for your Javascript application",
   "author": "Vu Duc Khai",
   "license": "MIT",
+  "keywords": [
+    "signal",
+    "proxy",
+    "reactive",
+    "reactivity",
+    "typescript"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/kaisergeX/signal-proxy.git",

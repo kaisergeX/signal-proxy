@@ -13,7 +13,7 @@ const [globalCount, setGlobalCount] = playgroundSignal;
 function PlaygroundChild1() {
   const [multiple, setMultiple] = useSignal(1);
   const [count, setCount] = useState(0);
-  const isUnSafeInterger = multiple() >= Number.MAX_SAFE_INTEGER;
+  const isSafeInterger = Number.isSafeInteger(multiple());
 
   useSignalEffect(() => {
     console.log(
@@ -68,9 +68,9 @@ function PlaygroundChild1() {
           className="button"
           type="button"
           onClick={() => setMultiple((v) => v * 4)}
-          disabled={isUnSafeInterger}
+          disabled={!isSafeInterger}
         >
-          {isUnSafeInterger ? 'Greater than MAX_SAFE_INTEGER' : 'Local multiplier 4x'}
+          {isSafeInterger ? 'Local multiplier 4x' : 'Greater than MAX_SAFE_INTEGER'}
         </button>
         <button
           className="button-secondary"
