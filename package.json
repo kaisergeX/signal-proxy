@@ -2,13 +2,20 @@
   "name": "signal-proxy",
   "private": true,
   "repository": "https://github.com/kaisergeX/signal-proxy.git",
+  "keywords": [
+    "signal",
+    "proxy",
+    "reactive",
+    "reactivity",
+    "typescript"
+  ],
   "scripts": {
     "build": "turbo build",
     "build:pkgs": "turbo build --filter=./packages/*",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "clean": "turbo run clean && rm -rf node_modules",
+    "clean": "rm -rf {node_modules,.turbo} && pnpm -r exec rm -rf {node_modules,dist,.turbo}",
     "publish:npm": "turbo run build lint --filter=./packages/signal && pnpm publish --filter './packages/signal' --access public && changeset tag",
     "publish:jsr": "cd ./packages/signal && pnpm dlx jsr publish"
   },

@@ -16,7 +16,7 @@ This package draws strong inspiration from [KnockoutJS](https://github.com/knock
 
 ## Run this monorepo locally
 
-Please check the root [`package.json`](https://github.com/kaisergeX/signal-proxy/blob/main/package.json#L29)'s `engines` field for the env requirement, then run:
+Please check the root [`package.json`](https://github.com/kaisergeX/signal-proxy/blob/main/package.json#L36)'s `engines` field for the env requirement, then run:
 
 ```
 pnpm i
