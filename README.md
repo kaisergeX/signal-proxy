@@ -8,7 +8,7 @@
 <p>A simple reactive system for your Javascript application.<br/>Zero dependency, TypeScript fully supported.</p>
 </div>
 
-[JS Signals proposal](https://github.com/tc39/proposal-signals) is currently in Stage 1. This package draws strong inspiration from [KnockoutJS](https://github.com/knockout/knockout)'s concepts and [SolidJS](https://github.com/solidjs)'s Signal, enabling us to use Signals in vanilla JavaScript.
+This package draws strong inspiration from [KnockoutJS](https://github.com/knockout/knockout)'s concepts and [SolidJS](https://github.com/solidjs)'s Signal, enabling us to use Signals in vanilla JavaScript. [JS Signals proposal](https://github.com/tc39/proposal-signals) is currently in Stage 1.
 
 ## Docs
 
@@ -16,7 +16,7 @@
 
 ## Run this monorepo locally
 
-Please check the root `package.json`'s `engines` field for the env requirement, then run:
+Please check the root [`package.json`](https://github.com/kaisergeX/signal-proxy/blob/main/package.json#L29)'s `engines` field for the env requirement, then run:
 
 ```
 pnpm i

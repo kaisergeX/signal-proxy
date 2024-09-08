@@ -6,20 +6,20 @@ const [globalCount] = playgroundSignal;
 
 createEffect(() => {
   console.log(
-    '%c[createEffect] PlaygroundChild3',
+    '%c[createEffect] Child3',
     'color: #f9fafb; background-color: #0ea5e9;',
-    `Global Signal value = ${globalCount()}`,
+    `globalCount = ${globalCount()}`,
   );
 });
 
 const PlaygroundChild3 = () => {
-  const computedCount = useComputed(globalCount);
+  const doubledGlobalCount = useComputed(() => globalCount() * 2);
 
   return (
     <div className="h-full rounded-lg p-4 shadow">
       <h3>PlaygroundChild 3</h3>
 
-      <pre className="my-4">Global Signal value: {computedCount()}</pre>
+      <code className="my-4 block">Global count doubled value: {doubledGlobalCount()}</code>
     </div>
   );
 };

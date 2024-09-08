@@ -13,16 +13,21 @@ const [globalCount, setGlobalCount] = playgroundSignal;
 function PlaygroundChild1() {
   const [multiple, setMultiple] = useSignal(1);
   const [count, setCount] = useState(0);
+  const isUnSafeInterger = multiple() >= Number.MAX_SAFE_INTEGER;
 
   useSignalEffect(() => {
-    console.log('%c[useSignalEffect]', 'color:#059669', `Local Signal value = ${multiple()}`);
+    console.log(
+      '%c[useSignalEffect] Child1',
+      'color:#059669',
+      `Local Signal value = ${multiple()}`,
+    );
   });
 
   useSignalEffect(() => {
     console.log(
-      '%c[useSignalEffect]',
+      '%c[useSignalEffect] Child1',
       'color:white;background-color:#059669',
-      `Global Signal value = ${globalCount()}`,
+      `globalCount = ${globalCount()}`,
     );
   });
 
@@ -58,16 +63,23 @@ function PlaygroundChild1() {
       </pre>
 
       <h2 className="mt-4 mb-2">Signal update:</h2>
-      <button className="button mr-2" type="button" onClick={() => setMultiple(multiple() * 2)}>
-        Local multiplier 2x
-      </button>
-      <button
-        className="button-secondary"
-        type="button"
-        onClick={() => setGlobalCount(globalCount() + 1)}
-      >
-        Global counter ++
-      </button>
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          className="button"
+          type="button"
+          onClick={() => setMultiple((v) => v * 4)}
+          disabled={isUnSafeInterger}
+        >
+          {isUnSafeInterger ? 'Greater than MAX_SAFE_INTEGER' : 'Local multiplier 4x'}
+        </button>
+        <button
+          className="button-secondary"
+          type="button"
+          onClick={() => setGlobalCount(globalCount() + 1)}
+        >
+          Global counter ++
+        </button>
+      </div>
 
       <h2 className="mt-4 mb-2">State update:</h2>
       <button className="button mr-2" type="button" onClick={() => setCount((c) => c + 1)}>
@@ -78,7 +90,7 @@ function PlaygroundChild1() {
 }
 
 function PlaygroundChild2() {
-  const doubledGlobalCount = useComputed(() => globalCount() * 2);
+  const computedGlobalCount = useComputed(globalCount);
 
   // @todo fix useSignal setter causing rerender twice on strict mode
   // const [_, forceRerender] = useSignal(undefined, {equals: false});
@@ -88,7 +100,7 @@ function PlaygroundChild2() {
     <div className="h-full rounded-lg p-4 shadow">
       <h3>PlaygroundChild 2</h3>
 
-      <code className="my-4 block">Global count doubled value: {doubledGlobalCount()}</code>
+      <code className="my-4 block">Global Signal value: {computedGlobalCount()}</code>
 
       {/* <button className="button mr-2" type="button" onClick={() => forceRerender()}>
         Force rerender
