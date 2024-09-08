@@ -1,5 +1,12 @@
 # @kaiverse/signal
 
+## 0.2.2
+
+### Patch Changes
+
+- 662cbc8: update README
+- 5bd3877: docs update
+
 ## 0.2.1
 
 ### Patch Changes
