@@ -6,7 +6,7 @@
 <p>A simple reactive system for your Javascript application.<br/>Zero dependency, TypeScript fully supported.</p>
 </div>
 
-[JS Signals proposal](https://github.com/tc39/proposal-signals) is currently in Stage 1. This package draws strong inspiration from [KnockoutJS](https://github.com/knockout/knockout)'s concepts and [SolidJS](https://github.com/solidjs)'s Signal, enabling us to use Signals in vanilla JavaScript.
+This package draws strong inspiration from [KnockoutJS](https://github.com/knockout/knockout)'s concepts and [SolidJS](https://github.com/solidjs)'s Signal, enabling us to use Signals in vanilla JavaScript. [JS Signals proposal](https://github.com/tc39/proposal-signals) is currently in Stage 1.
 
 ## Installation
 
@@ -15,8 +15,6 @@
 ```
 npm i @kaiverse/signal
 ```
-
-or
 
 ```
 pnpm add @kaiverse/signal
@@ -28,19 +26,15 @@ pnpm add @kaiverse/signal
 deno add @kaiverse/signal
 ```
 
-or
-
 ```
 npx jsr add @kaiverse/signal
 ```
-
-or
 
 ```
 pnpm dlx jsr add @kaiverse/signal
 ```
 
-### Via `unpkg` CDN:
+### Via CDN:
 
 ```
 unpkg.com/@kaiverse/signal
@@ -48,13 +42,17 @@ unpkg.com/@kaiverse/signal
 
 ## Compatibility
 
-Signal is a [**Proxy**](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object at its core, please check [compatibility section](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy#browser_compatibility).
+Signal is a [`Proxy`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object at its core, please check [compatibility section](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy#browser_compatibility).
+
+## Documentation
+
+[Functions & Types](https://jsr.io/@kaiverse/signal/doc)
 
 ## Example
 
 [Playground source code](https://github.com/kaisergeX/signal-proxy/blob/main/packages/signal/src/playground/index.ts)
 
-### Use Signal Proxy
+### 🔗Signal Proxy
 
 ````js
 /**
@@ -90,7 +88,9 @@ function fetchNextUser() {
 }
 ````
 
-### Signal utilities examples
+### 🚦Signal utilities
+
+If you have experience with SolidJS or ReactJS, you'll find these utility functions very familiar.
 
 ```js
 import {createComputed, createEffect, createSignal} from '@kaiverse/signal';
@@ -117,8 +117,8 @@ createEffect(() => {
 
 ### React
 
-[Experimental] [React signal hooks](https://github.com/kaisergeX/signal-proxy/blob/main/apps/playground/src/hooks/react-signal.ts) implementation. **DO NOT** use in production.
+[React signal hooks](https://github.com/kaisergeX/signal-proxy/blob/main/apps/playground/src/hooks/react-signal.ts) implementation. Experimental. **DO NOT** use in production.
 
 <small>Those hooks work, but its lack of testing and seems that the usage of memory is inefficient. An alternative approach may be better. Please feel free to open PRs. Your contributions are welcomed and appreciated.</small>
 
-[React playground source code](https://github.com/kaisergeX/signal-proxy/blob/main/apps/playground/src/routes/signal/route.lazy.tsx)
+[React playground](https://codesandbox.io/p/devbox/kaiverse-signal-react-port-c7sp3v) (codesandbox) - [source code](https://github.com/kaisergeX/signal-proxy/blob/main/apps/playground/src/routes/signal/route.lazy.tsx)
