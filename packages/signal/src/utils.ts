@@ -11,7 +11,7 @@ import type {
   CleanupEffectFn,
 } from './types';
 
-let effectTracking: EffectTracking | null = null;
+let effectTrackingCache: EffectTracking | null = null;
 
 /**
  * Ignores tracking any of the dependencies in the `untrackEffectCb` and returns its value
@@ -19,10 +19,10 @@ let effectTracking: EffectTracking | null = null;
  * @param untrackEffectCb
  */
 export function unTrack(untrackEffectCb: SignalEffect): void {
-  const prevEffectTracking = effectTracking;
-  effectTracking = null;
+  const prevEffectTracking = effectTrackingCache;
+  effectTrackingCache = null;
   const untrackEffectExecute = untrackEffectCb();
-  effectTracking = prevEffectTracking;
+  effectTrackingCache = prevEffectTracking;
   return untrackEffectExecute;
 }
 
@@ -66,9 +66,9 @@ export function createSignal<T>(
           typeof equals === 'boolean' ? equals : equals(currentValue.value, newValue.value),
   );
   const getSignalValue: Signal<T | undefined> = () => {
-    if (effectTracking) {
-      subscribes.add(effectTracking);
-      effectTracking.deps.add(subscribes);
+    if (effectTrackingCache) {
+      subscribes.add(effectTrackingCache);
+      effectTrackingCache.deps.add(subscribes);
     }
 
     return signal.value;
@@ -91,9 +91,9 @@ export function createEffect(effect: SignalEffect): CleanupEffectFn {
   const effectDetail: EffectTracking = {
     execute: () => {
       cleanupEffect(effectDetail);
-      effectTracking = effectDetail;
+      effectTrackingCache = effectDetail;
       effect();
-      effectTracking = null;
+      effectTrackingCache = null;
     },
     deps: new Set(),
   };
