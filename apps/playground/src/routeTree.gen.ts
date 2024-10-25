@@ -16,10 +16,16 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const OtherLazyImport = createFileRoute('/other')()
 const SignalRouteLazyImport = createFileRoute('/signal')()
 const IndexRouteLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const OtherLazyRoute = OtherLazyImport.update({
+  path: '/other',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/other.lazy').then((d) => d.Route))
 
 const SignalRouteLazyRoute = SignalRouteLazyImport.update({
   path: '/signal',
@@ -49,6 +55,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignalRouteLazyImport
       parentRoute: typeof rootRoute
     }
+    '/other': {
+      id: '/other'
+      path: '/other'
+      fullPath: '/other'
+      preLoaderRoute: typeof OtherLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -57,6 +70,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRouteLazyRoute,
   SignalRouteLazyRoute,
+  OtherLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -68,7 +82,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/signal"
+        "/signal",
+        "/other"
       ]
     },
     "/": {
@@ -76,6 +91,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/signal": {
       "filePath": "signal/route.lazy.tsx"
+    },
+    "/other": {
+      "filePath": "other.lazy.tsx"
     }
   }
 }

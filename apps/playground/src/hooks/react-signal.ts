@@ -13,7 +13,6 @@ import {useCallback, useEffect, useReducer, useRef, useSyncExternalStore} from '
  * Use `Signal` inside React component.
  * ___
  * ⚠️ [Experimental] Lack of testing. **DO NOT** use in production.
- * - `useSignal`'s setter causes component to re-render twice on strict mode.
  */
 export function useSignal<T>(): SignalFactoryReturnType<T | undefined>;
 export function useSignal<T>(value: T, options?: SignalOptions<T>): SignalFactoryReturnType<T>;
@@ -26,16 +25,16 @@ export function useSignal<T>(
     signalRef.current = createSignal<T | undefined>(value, {equals, onChange});
   }
 
-  useSyncExternalStore(
-    useCallback((onStoreChange) => {
-      const cleanupEffect = createEffect(() => {
+  const externalSubscribe = useCallback<Parameters<typeof useSyncExternalStore>[0]>(
+    (onStoreChange) =>
+      createEffect(() => {
         signalRef.current?.[0]();
         onStoreChange();
-      });
-      return cleanupEffect;
-    }, []),
-    signalRef.current[0],
+      }),
+    [],
   );
+
+  useSyncExternalStore(externalSubscribe, signalRef.current[0]);
 
   return signalRef.current;
 }
@@ -56,7 +55,7 @@ export const useSignalEffect = (effect: SignalEffect) => {
   useEffect(() => {
     const cleanupEffect = createEffect(effect);
     // forceUpdate();
-    return () => cleanupEffect();
+    return cleanupEffect;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };

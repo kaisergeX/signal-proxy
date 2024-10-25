@@ -1,4 +1,4 @@
-import {createLazyFileRoute} from '@tanstack/react-router';
+import {createLazyFileRoute, Link} from '@tanstack/react-router';
 import {playgroundSignal} from './-utils/store';
 import PlaygroundChild3 from './-components/PlaygroundChild3';
 import {useState} from 'react';
@@ -111,10 +111,13 @@ function PlaygroundChild2() {
 
 function SignalPlayground() {
   return (
-    <div className="flex-center-between h-1/2 gap-4 p-4 *:flex-1">
-      <PlaygroundChild1 />
-      <PlaygroundChild2 />
-      <PlaygroundChild3 />
-    </div>
+    <>
+      <Link to="/other">Other page</Link>
+      <div className="flex-center-between h-1/2 gap-4 p-4 *:flex-1">
+        <PlaygroundChild1 />
+        <PlaygroundChild2 />
+        <PlaygroundChild3 />
+      </div>
+    </>
   );
 }
