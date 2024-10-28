@@ -9,21 +9,23 @@ import type {
   SignalOptions,
   SignalSetter,
   CleanupEffectFn,
+  SignalUntrackFn,
 } from './types';
 
 let effectTrackingCache: EffectTracking | null = null;
 
 /**
- * Ignores tracking any of the dependencies in the `untrackEffectCb` and returns its value
+ * Ignores tracking any of the dependencies inside the `untrackFn` scope.
  *
- * @param untrackEffectCb
+ * @param untrackFn the executing code block.
+ * @returns the return value of `untrackFn`.
  */
-export function unTrack(untrackEffectCb: SignalEffect): void {
+export function unTrack<T>(untrackFn: SignalUntrackFn<T>): T {
   const prevEffectTracking = effectTrackingCache;
   effectTrackingCache = null;
-  const untrackEffectExecute = untrackEffectCb();
+  const untrackReturnValue = untrackFn();
   effectTrackingCache = prevEffectTracking;
-  return untrackEffectExecute;
+  return untrackReturnValue;
 }
 
 /**
@@ -84,7 +86,7 @@ export function createSignal<T>(
 }
 
 /**
- * @param effectCb Imperative function that will run whenever dependencies change. Dependencies are Signals that are used inside the Effect itself
+ * @param effect Imperative function that will run whenever dependencies change. Dependencies are Signals that are used inside the Effect itself.
  * @returns a cleanup function. It will stop related Effect.
  */
 export function createEffect(effect: SignalEffect): CleanupEffectFn {
@@ -98,6 +100,7 @@ export function createEffect(effect: SignalEffect): CleanupEffectFn {
     deps: new Set(),
   };
 
+  // const weakEffectDetailRef = new WeakRef(effectDetail);
   effectDetail.execute();
 
   // if (import.meta.hot) {
@@ -110,7 +113,7 @@ export function createEffect(effect: SignalEffect): CleanupEffectFn {
 }
 
 /**
- * `createComputed` creates a readonly reactive value equal to the return value of the given function and this function only gets executed when its dependencies change.
+ * Creates a readonly reactive value equal to the return value of the given function and this function only gets executed when its dependencies change.
  *
  * Dependencies are all Signals that are used inside the Computed function.
  *
