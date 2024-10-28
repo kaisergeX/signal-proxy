@@ -1,5 +1,11 @@
 # @kaiverse/signal
 
+## 0.2.3
+
+### Patch Changes
+
+- aa1523b: fix `unTrack` infer return type
+
 ## 0.2.2
 
 ### Patch Changes
