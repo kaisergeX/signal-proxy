@@ -5,7 +5,7 @@
 <div align="center">
 <h1>Signal Proxy</h1>
 
-<p>A simple reactive system for your Javascript application.<br/>Zero dependency, TypeScript fully supported.</p>
+<p>A lightweight, simple reactive system for your Javascript application.<br/>Zero dependencies, TypeScript fully supported.</p>
 </div>
 
 This package draws strong inspiration from [KnockoutJS](https://github.com/knockout/knockout)'s concepts and [SolidJS](https://github.com/solidjs)'s Signal, enabling us to use Signals in vanilla JavaScript. [JS Signals proposal](https://github.com/tc39/proposal-signals) is currently in Stage 1.

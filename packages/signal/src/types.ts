@@ -40,3 +40,4 @@ export type SignalFactoryReturnType<T> = Readonly<[get: Signal<T>, set: SignalSe
 export type SignalEffect = () => void;
 export type EffectTracking = {execute: SignalEffect; deps: Set<Set<EffectTracking>>};
 export type CleanupEffectFn = () => void;
+export type SignalUntrackFn<T> = () => T;
