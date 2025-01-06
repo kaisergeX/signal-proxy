@@ -35,4 +35,11 @@ yarn-error.log*
 
 # Misc
 .DS_Store
-*.pem
+*.pe.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+routeTree.gen.ts

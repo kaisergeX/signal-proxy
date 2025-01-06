@@ -5,21 +5,25 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  {ignores: ['dist', '**/*.d.ts', 'node_modules']},
+  {ignores: ['dist', '**/dist', '**/*.d.ts', 'node_modules', '**/routeTree.gen.ts']},
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['**/*.ts'],
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'error',
         {argsIgnorePattern: '^_', varsIgnorePattern: '^_'},
       ],
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    rules: {
       '@typescript-eslint/no-import-type-side-effects': 'error',
     },
   },
   {
-    files: ['apps/**/*.{ts,tsx}'],
+    files: ['apps/**/*.{ts,tsx}', 'packages/signal-react/**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,

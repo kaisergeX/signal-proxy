@@ -2,7 +2,7 @@ import {createLazyFileRoute, Link} from '@tanstack/react-router';
 import {playgroundSignal} from './-utils/store';
 import PlaygroundChild3 from './-components/PlaygroundChild3';
 import {useState} from 'react';
-import {useSignal, useSignalEffect, useComputed} from '#hooks';
+import {useSignal, useSignalEffect, useComputed, useSyncSignal} from '#hooks';
 
 export const Route = createLazyFileRoute('/signal')({
   component: SignalPlayground,
@@ -11,7 +11,7 @@ export const Route = createLazyFileRoute('/signal')({
 const [globalCount, setGlobalCount] = playgroundSignal;
 
 function PlaygroundChild1() {
-  const [multiple, setMultiple] = useSignal(1);
+  const [multiple, setMultiple] = useSyncSignal(1);
   const [count, setCount] = useState(0);
   const isSafeInterger = Number.isSafeInteger(multiple());
 
@@ -91,10 +91,8 @@ function PlaygroundChild1() {
 
 function PlaygroundChild2() {
   const computedGlobalCount = useComputed(globalCount);
-
-  // @todo fix useSignal setter causing rerender twice on strict mode
-  // const [_, forceRerender] = useSignal(undefined, {equals: false});
-  // console.log('PlaygroundChild2 rerendered');
+  const [, forceRerender] = useSignal(undefined, {equals: false}); // same as useReducer((x) => x + 1, 0);
+  console.log('PlaygroundChild2 rerendered');
 
   return (
     <div className="h-full rounded-lg p-4 shadow">
@@ -102,9 +100,9 @@ function PlaygroundChild2() {
 
       <code className="my-4 block">Global Signal value: {computedGlobalCount()}</code>
 
-      {/* <button className="button mr-2" type="button" onClick={() => forceRerender()}>
-        Force rerender
-      </button> */}
+      <button className="button mr-2" type="button" onClick={() => forceRerender()}>
+        Force rerender PlaygroundChild 2
+      </button>
     </div>
   );
 }
