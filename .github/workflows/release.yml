@@ -43,10 +43,10 @@ jobs:
         run: pnpm install
 
       - name: Publish @kaiverse/signal to JSR
-        run: pnpm publish:jsr
+        run: cd ./packages/signal && pnpm dlx jsr publish
 
       - name: Publish @kaiverse/signal-react to JSR
-        run: pnpm publish:jsr-react-adapter
+        run: cd ../../packages/signal-react && pnpm dlx jsr publish
 
       - name: Creating .npmrc
         run: |
