@@ -24,6 +24,14 @@ jobs:
         with:
           run_install: false
 
+      - name: Cache turbo build setup
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
       - name: Setup Node.js 20.x
         uses: actions/setup-node@v4
         with:
@@ -34,11 +42,14 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Publish @kaiverse/signal to JSR
-        run: pnpm publish:jsr
+      - name: Build @kaiverse/* packages
+        run: pnpm build:pkgs
+        env:
+          TURBO_TELEMETRY_DISABLED: 1
 
-      - name: Publish @kaiverse/signal-react to JSR
-        run: pnpm publish:jsr-react-adapter
+      - name: Publish @kaiverse/signal to JSR
+        run: pnpm dlx jsr publish
+        working-directory: ./packages/signal
 
       - name: Creating .npmrc
         run: |
@@ -58,3 +69,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           TURBO_TELEMETRY_DISABLED: 1
+
+      - name: Publish @kaiverse/signal-react to JSR
+        run: pnpm dlx jsr publish
+        working-directory: ./packages/signal-react
