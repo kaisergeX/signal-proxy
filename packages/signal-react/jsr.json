@@ -1,0 +1,14 @@
+{
+    "name": "@kaiverse/signal-react",
+    "version": "0.3.0",
+    "exports": "./lib/index.ts",
+    "publish": {
+        "include": [
+            "lib",
+            "package.json",
+            "README.md",
+            "CHANGELOG.md",
+            "LICENSE"
+        ]
+    }
+}

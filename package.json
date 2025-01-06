@@ -16,8 +16,9 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "clean": "rm -rf {node_modules,.turbo} && pnpm -r exec rm -rf {node_modules,dist,.turbo}",
-    "publish:npm": "turbo run build lint --filter=./packages/signal && pnpm publish --filter './packages/signal' --access public && changeset tag",
-    "publish:jsr": "cd ./packages/signal && pnpm dlx jsr publish"
+    "publish:npm": "turbo run build lint --filter=./packages/* && pnpm publish --filter '@kaiverse/*' --access public && changeset tag",
+    "publish:jsr": "cd ./packages/signal && pnpm dlx jsr publish",
+    "publish:jsr-react-adapter": "cd ./packages/signal-react && pnpm dlx jsr publish"
   },
   "type": "module",
   "devDependencies": {

@@ -1,20 +1,10 @@
+import {useCallback, useReducer, useRef, useSyncExternalStore} from 'react';
 import {
-  createComputed,
   createEffect,
   createSignal,
-  type Signal,
-  type SignalEffect,
   type SignalFactoryReturnType,
   type SignalOptions,
 } from '@kaiverse/signal';
-import {
-  useCallback,
-  useDebugValue,
-  useEffect,
-  useReducer,
-  useRef,
-  useSyncExternalStore,
-} from 'react';
 
 /**
  * Use `Signal` inside React component. `useSyncSignal` is integrated with `useSyncExternalStore` (`uSES`) which is a recommended way to use "external stores" in React.
@@ -50,7 +40,6 @@ export function useSyncSignal<T>(
 
   useSyncExternalStore(externalSubscribe, signalRef.current[0]);
 
-  useDebugValue(signalRef.current[0]());
   return signalRef.current;
 }
 
@@ -72,6 +61,7 @@ export function useSignal<T>(
 ): SignalFactoryReturnType<T | undefined> {
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
   const signalRef = useRef<SignalFactoryReturnType<T | undefined>>();
+
   if (!signalRef.current) {
     // https://react.dev/reference/react/useRef#avoiding-recreating-the-ref-contents
     signalRef.current = createSignal<T | undefined>(value, {
@@ -82,45 +72,6 @@ export function useSignal<T>(
       },
     });
   }
-  useDebugValue(signalRef.current[0]());
+
   return signalRef.current;
 }
-
-/**
- * Signal effect inside React component.
- * ___
- * ⚠️ [Experimental] Implementation of React adapter. **DO NOT** use in production. Known issues:
- * - Some env has this issue: When there're `N` (N>1) `useSignalEffect` in 1 component, each tracking a diff Signal, and only 1 Signal changes, those effects sometime trigger `N` times.
- * No idea. The issue might be occurring because of multiple empty deps useEffect.
- * Reproduce?: Playground page - Hit the "`Local multiplier 4x`" button multiple times
- *
- * @param effect Imperative function that will run whenever dependencies change. Dependencies are Signals that are used inside the Effect itself.
- */
-export const useSignalEffect = (effect: SignalEffect) => {
-  // const [_, forceUpdate] = useReducer((x) => x + 1, 0);
-
-  useEffect(() => {
-    const cleanupEffect = createEffect(effect);
-    // forceUpdate();
-    return cleanupEffect;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-};
-
-/**
- * Use `createComputed` - derived signals inside React component.
- * ___
- * ⚠️ [Experimental] Implementation of React adapter. **DO NOT** use in production.
- */
-export const useComputed = <T>(factory: () => T): Signal<T> => {
-  const [_, rerender] = useReducer((x) => x + 1, 0);
-  const computedSignalRef = useRef<Signal<T>>();
-  if (!computedSignalRef.current) {
-    computedSignalRef.current = createComputed<T>(() => {
-      rerender();
-      return factory();
-    });
-  }
-
-  return computedSignalRef.current;
-};

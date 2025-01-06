@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@kaiverse/k": "^0.3.0",
-    "@kaiverse/signal": "workspace:*",
+    "@kaiverse/signal-react": "workspace:*",
     "@tailwindcss/vite": "4.0.0-alpha.19",
     "@tanstack/react-router": "^1.76.1",
     "react": "^18.3.1",

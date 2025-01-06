@@ -1,13 +1,8 @@
-import {createLazyFileRoute, Link} from '@tanstack/react-router';
-import {playgroundSignal} from './-utils/store';
-import PlaygroundChild3 from './-components/PlaygroundChild3';
+import {useComputed, useSignal, useSignalEffect, useSyncSignal} from '#hooks';
 import {useState} from 'react';
-import {useSignal, useSignalEffect, useComputed, useSyncSignal} from '@kaiverse/signal-react';
-import {useAnimateStateChange} from '#hooks';
-
-export const Route = createLazyFileRoute('/signal')({
-  component: SignalPlayground,
-});
+import {playgroundSignal} from './store';
+import PlaygroundChild3 from './playground-child-3';
+import {useAnimateStateChange} from './hooks';
 
 const [globalCount, setGlobalCount] = playgroundSignal;
 
@@ -57,14 +52,12 @@ function PlaygroundChild1() {
   // }, []);
 
   return (
-    <div className="h-full rounded-lg p-4 shadow">
-      <h3>PlaygroundChild 1</h3>
-      <pre className="whitespace-pre-wrap py-4">
-        {JSON.stringify({'Signal value': multiple(), 'State value': count}, null, 2)}
-      </pre>
+    <div>
+      <h2>PlaygroundChild 1</h2>
+      <pre>{JSON.stringify({'Signal value': multiple(), 'State value': count}, null, 2)}</pre>
 
-      <h2 className="mt-4 mb-2">Signal update:</h2>
-      <div className="flex flex-wrap items-center gap-2">
+      <h3>Signal update:</h3>
+      <div className="flex" style={{flexWrap: 'wrap'}}>
         <button
           className="button"
           type="button"
@@ -82,8 +75,8 @@ function PlaygroundChild1() {
         </button>
       </div>
 
-      <h2 className="mt-4 mb-2">State update:</h2>
-      <button className="button mr-2" type="button" onClick={() => setCount((c) => c + 1)}>
+      <h3>State update:</h3>
+      <button type="button" onClick={() => setCount((c) => c + 1)}>
         State counter ++
       </button>
     </div>
@@ -92,24 +85,24 @@ function PlaygroundChild1() {
 
 function PlaygroundChild2() {
   const computedGlobalCount = useComputed(globalCount);
-  const [, forceRerender] = useSignal(undefined, {equals: false}); // same as useReducer((x) => x + 1, 0);
+  const [, forceRerender] = useSignal(undefined, {equals: false});
   console.log('PlaygroundChild2 rerendered');
 
   const flashElement = useAnimateStateChange({
     value: computedGlobalCount(),
-    keyframes: {opacity: [0.5, 0.2, 1]},
+    keyframes: {color: ['#86efac', 'inherit']},
     options: 400,
   });
 
   return (
-    <div className="h-full rounded-lg p-4 shadow">
-      <h3>PlaygroundChild 2</h3>
+    <div>
+      <h2>PlaygroundChild 2</h2>
 
-      <code className="my-4 block">
-        Global Signal value: <span ref={flashElement}>{computedGlobalCount()}</span>
-      </code>
+      <pre>
+        Global Signal value: <strong ref={flashElement}>{computedGlobalCount()}</strong>
+      </pre>
 
-      <button className="button mr-2" type="button" onClick={() => forceRerender()}>
+      <button type="button" onClick={() => forceRerender()}>
         Force rerender PlaygroundChild 2
       </button>
     </div>
@@ -118,13 +111,12 @@ function PlaygroundChild2() {
 
 function SignalPlayground() {
   return (
-    <>
-      <Link to="/other">Other page</Link>
-      <div className="flex-center-between h-1/2 gap-4 p-4 *:flex-1">
-        <PlaygroundChild1 />
-        <PlaygroundChild2 />
-        <PlaygroundChild3 />
-      </div>
-    </>
+    <div className="playground">
+      <PlaygroundChild1 />
+      <PlaygroundChild2 />
+      <PlaygroundChild3 />
+    </div>
   );
 }
+
+export default SignalPlayground;

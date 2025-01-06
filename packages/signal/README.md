@@ -113,12 +113,26 @@ createEffect(() => {
 });
 ```
 
-## Framework ports?
+## Frameworks compatibility
+
+This package is built for vanilla JS/TS applications.
+
+However, below are implementations to adapt with some frameworks's reactive systems.
+
+### React Server Components & Functions
+
+Compatible.
 
 ### React
 
-[React signal hooks](https://github.com/kaisergeX/signal-proxy/blob/main/apps/playground/src/hooks/react-signal.ts) implementation. Experimental. **DO NOT** use in production.
+Use this package instead: [Experimental] [`@kaiverse/signal-react`](https://jsr.io/@kaiverse/signal-react)
 
-<small>Those hooks work, but its lack of testing and seems that the usage of memory is inefficient. An alternative approach may be better. Please feel free to open PRs. Your contributions are welcomed and appreciated.</small>
+### Astro
 
-[React playground](https://codesandbox.io/p/devbox/kaiverse-signal-react-port-c7sp3v) (codesandbox) - [source code](https://github.com/kaisergeX/signal-proxy/blob/main/apps/playground/src/routes/signal/route.lazy.tsx)
+Compatible. No additional setup required.
+
+You can use it in the [component script](https://docs.astro.build/basics/astro-components/#the-component-script) section for server signals, and/or the [`<script>`](https://docs.astro.build/guides/client-side-scripts/#using-script-in-astro) tag for client signals.
+
+### SolidJS, VueJS
+
+... Just use their "signals" APIs.

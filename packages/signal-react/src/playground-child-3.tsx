@@ -1,6 +1,8 @@
-import {createEffect, useComputed} from '@kaiverse/signal-react';
-import {playgroundSignal} from '../-utils/store';
-import {useAnimateStateChange} from '#hooks';
+import {createEffect} from '@kaiverse/signal';
+import {useComputed} from '#hooks';
+import {playgroundSignal} from './store';
+import {useAnimateStateChange} from './hooks';
+import {useRef} from 'react';
 
 const [globalCount] = playgroundSignal;
 
@@ -14,20 +16,21 @@ createEffect(() => {
 
 const PlaygroundChild3 = () => {
   const doubledGlobalCount = useComputed(() => globalCount() * 2);
-
-  const flashElement = useAnimateStateChange({
+  const element = useRef(null);
+  useAnimateStateChange({
+    ref: element,
     value: doubledGlobalCount(),
     keyframes: {opacity: [0.5, 0.2, 1]},
     options: 400,
   });
 
   return (
-    <div className="h-full rounded-lg p-4 shadow">
-      <h3>PlaygroundChild 3</h3>
+    <div>
+      <h2>PlaygroundChild 3</h2>
 
-      <code className="my-4 block">
-        Global count doubled value: <span ref={flashElement}>{doubledGlobalCount()}</span>
-      </code>
+      <pre>
+        Global count doubled value: <strong ref={element}>{doubledGlobalCount()}</strong>
+      </pre>
     </div>
   );
 };
