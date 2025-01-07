@@ -47,13 +47,6 @@ jobs:
         env:
           TURBO_TELEMETRY_DISABLED: 1
 
-      - name: JSR versioning
-        run: pnpm dlx tsx ./scripts/jsr-versioning.ts
-
-      - name: Publish @kaiverse/signal to JSR
-        run: pnpm dlx jsr publish
-        working-directory: ./packages/signal
-
       - name: Creating .npmrc
         run: |
           cat << EOF > "$HOME/.npmrc"
@@ -73,6 +66,13 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           TURBO_TELEMETRY_DISABLED: 1
 
+      - name: JSR versioning
+        run: pnpm dlx tsx ./scripts/jsr-versioning.ts
+
+      - name: Publish @kaiverse/signal to JSR
+        run: pnpm dlx jsr publish --allow-dirty
+        working-directory: ./packages/signal
+
       - name: Publish @kaiverse/signal-react to JSR
-        run: pnpm dlx jsr publish
+        run: pnpm dlx jsr publish --allow-dirty
         working-directory: ./packages/signal-react
