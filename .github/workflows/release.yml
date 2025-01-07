@@ -67,12 +67,15 @@ jobs:
           TURBO_TELEMETRY_DISABLED: 1
 
       - name: JSR versioning
+        if: github.head_ref == 'changeset-release/main'
         run: pnpm dlx tsx ./scripts/jsr-versioning.ts
 
       - name: Publish @kaiverse/signal to JSR
+        if: github.head_ref == 'changeset-release/main'
         run: pnpm dlx jsr publish --allow-dirty
         working-directory: ./packages/signal
 
       - name: Publish @kaiverse/signal-react to JSR
+        if: github.head_ref == 'changeset-release/main'
         run: pnpm dlx jsr publish --allow-dirty
         working-directory: ./packages/signal-react
