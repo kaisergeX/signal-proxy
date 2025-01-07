@@ -1,5 +1,11 @@
 # @kaiverse/signal
 
+## 0.3.1
+
+### Patch Changes
+
+- b8d45e8: README - Update install command
+
 ## 0.3.0
 
 ### Minor Changes
