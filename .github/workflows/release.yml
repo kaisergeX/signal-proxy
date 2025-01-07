@@ -32,10 +32,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turbo-
 
-      - name: Setup Node.js 20.x
+      - name: Setup Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
@@ -46,6 +46,9 @@ jobs:
         run: pnpm build:pkgs
         env:
           TURBO_TELEMETRY_DISABLED: 1
+
+      - name: JSR versioning
+        run: pnpm dlx tsx ./scripts/jsr-versioning.ts
 
       - name: Publish @kaiverse/signal to JSR
         run: pnpm dlx jsr publish
