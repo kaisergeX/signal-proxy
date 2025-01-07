@@ -40,7 +40,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm i --frozen-lockfile
 
       - name: Build @kaiverse/* packages
         run: pnpm build:pkgs

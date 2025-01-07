@@ -33,7 +33,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/signal-react.js"
+      "default": "./dist/index.js"
     }
   },
   "scripts": {

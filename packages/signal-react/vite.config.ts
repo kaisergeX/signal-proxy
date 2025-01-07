@@ -16,7 +16,7 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, 'lib/index.ts'),
-      fileName: 'signal-react',
+      fileName: 'index',
       formats: ['es'],
     },
     rollupOptions: {
