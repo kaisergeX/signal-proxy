@@ -1,5 +1,11 @@
 # @kaiverse/signal
 
+## 0.3.0
+
+### Minor Changes
+
+- 1cc2220: (signal) Update README and playground to align with `@kaiverse/signal-react` adapter.
+
 ## 0.2.3
 
 ### Patch Changes
