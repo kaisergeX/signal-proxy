@@ -1,6 +1,6 @@
 {
   "name": "@kaiverse/signal",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A simple reactive system for your Javascript application",
   "author": "Vu Duc Khai",
   "license": "MIT",
