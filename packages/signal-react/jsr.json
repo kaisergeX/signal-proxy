@@ -1,8 +1,8 @@
 {
   "name": "@kaiverse/signal-react",
-  "version": "0.3.0",
+  "version": "${version}",
   "imports": {
-    "@kaiverse/signal": "jsr:@kaiverse/signal"
+    "@kaiverse/signal": "jsr:@kaiverse/signal@${version}"
   },
   "exports": "./lib/index.ts",
   "publish": {
