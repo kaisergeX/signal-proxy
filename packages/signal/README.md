@@ -23,7 +23,7 @@ pnpm add @kaiverse/signal
 ### Via `jsr`
 
 ```
-deno add @kaiverse/signal
+deno add jsr:@kaiverse/signal
 ```
 
 ```
