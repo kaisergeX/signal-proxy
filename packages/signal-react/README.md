@@ -1,3 +1,5 @@
+[![npm](https://img.shields.io/npm/v/@kaiverse/signal-react)](https://www.npmjs.com/package/@kaiverse/signal-react)
+[![JSR](https://jsr.io/badges/@kaiverse/signal-react)](https://jsr.io/@kaiverse/signal-react)
 [![.github/workflows/ci.yml](https://github.com/kaisergeX/signal-proxy/actions/workflows/ci.yml/badge.svg)](https://github.com/kaisergeX/signal-proxy/actions/workflows/ci.yml)
 
 <div align="center">
@@ -24,7 +26,7 @@ pnpm add @kaiverse/signal-react
 ### Via `jsr`
 
 ```
-deno add @kaiverse/signal-react
+deno add jsr:@kaiverse/signal-react
 ```
 
 ```
