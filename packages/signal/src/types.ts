@@ -38,6 +38,7 @@ export type SignalOptions<T> = {
 export type SignalFactoryReturnType<T> = Readonly<[get: Signal<T>, set: SignalSetter<T>]>;
 /** An Effect that runs whenever its dependencies change. */
 export type SignalEffect = () => void;
-export type EffectTracking = {execute: SignalEffect; deps: Set<Set<EffectTracking>>};
+export type EffectTracking = Readonly<{execute: SignalEffect; deps: Set<Set<EffectTracking>>}>;
 export type CleanupEffectFn = () => void;
 export type SignalUntrackFn<T> = () => T;
+export type BatchUpdateFn<T> = () => T;

@@ -1,4 +1,4 @@
-// Inspired by [KnockoutJS](https://github.com/knockout/knockout) and [SolidJS](https://github.com/solidjs)'s Signal implementation
+// Inspired by [KnockoutJS](https://github.com/knockout/knockout) and [SolidJS](https://github.com/solidjs/solid)'s Signal implementation
 
 import {signalProxy} from './core';
 import type {
@@ -10,9 +10,13 @@ import type {
   SignalSetter,
   CleanupEffectFn,
   SignalUntrackFn,
+  BatchUpdateFn,
 } from './types';
 
-let effectTrackingCache: EffectTracking | null = null;
+const effectTrackingCache: EffectTracking[] = [];
+function getCurrentEffectTracking(): EffectTracking | undefined {
+  return effectTrackingCache[effectTrackingCache.length - 1];
+}
 
 /**
  * Ignores tracking any of the dependencies inside the `untrackFn` scope.
@@ -21,11 +25,46 @@ let effectTrackingCache: EffectTracking | null = null;
  * @returns the return value of `untrackFn`.
  */
 export function unTrack<T>(untrackFn: SignalUntrackFn<T>): T {
-  const prevEffectTracking = effectTrackingCache;
-  effectTrackingCache = null;
-  const untrackReturnValue = untrackFn();
-  effectTrackingCache = prevEffectTracking;
-  return untrackReturnValue;
+  const currEffectTracking = getCurrentEffectTracking();
+  if (!currEffectTracking) {
+    return untrackFn();
+  }
+
+  effectTrackingCache.pop();
+  try {
+    return untrackFn();
+  } finally {
+    effectTrackingCache.push(currEffectTracking);
+  }
+}
+
+let batchingLevel = 0; // Tracks nesting `batch` depth, use count instead of boolean to support nested `batch`
+const pendingEffects = new Set<EffectTracking>();
+
+/**
+ * Batches multiple updates together.
+ * ___
+ * More precisely, during the `batchFn` block, it holds executing related computations until the end to prevent unnecessary recalculation.
+ *
+ * @param batchFn a function that contains multiple Signal updates.
+ * @returns the return value of `batchFn`.
+ */
+export function batch<T>(batchFn: BatchUpdateFn<T>): T {
+  batchingLevel++;
+
+  try {
+    return batchFn();
+  } finally {
+    batchingLevel--;
+
+    if (batchingLevel === 0) {
+      // only execute pending effects when the outermost batch completes.
+      for (const effect of [...pendingEffects]) {
+        effect.execute();
+      }
+      pendingEffects.clear();
+    }
+  }
 }
 
 /**
@@ -60,7 +99,13 @@ export function createSignal<T>(
     {value},
     (_, newValue) => {
       onChange?.(newValue);
-      [...subscribes].forEach(({execute}) => execute());
+      for (const effectDetail of [...subscribes]) {
+        if (batchingLevel > 0) {
+          pendingEffects.add(effectDetail);
+        } else {
+          effectDetail.execute();
+        }
+      }
     },
     equals === undefined
       ? undefined
@@ -68,9 +113,10 @@ export function createSignal<T>(
           typeof equals === 'boolean' ? equals : equals(currentValue.value, newValue.value),
   );
   const getSignalValue: Signal<T | undefined> = () => {
-    if (effectTrackingCache) {
-      subscribes.add(effectTrackingCache);
-      effectTrackingCache.deps.add(subscribes);
+    const currEffectTracking = getCurrentEffectTracking();
+    if (currEffectTracking) {
+      subscribes.add(currEffectTracking);
+      currEffectTracking.deps.add(subscribes);
     }
 
     return signal.value;
@@ -93,9 +139,12 @@ export function createEffect(effect: SignalEffect): CleanupEffectFn {
   const effectDetail: EffectTracking = {
     execute: () => {
       cleanupEffect(effectDetail);
-      effectTrackingCache = effectDetail;
-      effect();
-      effectTrackingCache = null;
+      effectTrackingCache.push(effectDetail);
+      try {
+        effect();
+      } finally {
+        effectTrackingCache.pop();
+      }
     },
     deps: new Set(),
   };
