@@ -1,4 +1,4 @@
-import {createEffect} from '@kaiverse/signal';
+import {createComputed, createEffect} from '@kaiverse/signal';
 import {useComputed} from '#hooks';
 import {playgroundSignal} from './store';
 import {useAnimateStateChange} from './hooks';
@@ -11,6 +11,16 @@ createEffect(() => {
     '%c[createEffect] Child3',
     'color: #f9fafb; background-color: #0ea5e9;',
     `globalCount = ${globalCount()}`,
+  );
+});
+
+const double = createComputed(() => createComputed(() => globalCount() * 2)() * 2);
+
+createEffect(() => {
+  console.log(
+    '%c[double] double',
+    'color: #f9fafb; background-color: #0ea5e9;',
+    `double = ${double()}`,
   );
 });
 

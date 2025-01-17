@@ -10,6 +10,14 @@ createEffect(() => {
     'color: #f9fafb; background-color: #0ea5e9;',
     `globalCount = ${globalCount()}`,
   );
+
+  createEffect(() => {
+    console.log(
+      '%c[createEffect] Child3',
+      'color: #f9fafb; background-color: #0ea5e9;',
+      `globalCount = ${globalCount()}`,
+    );
+  });
 });
 
 const PlaygroundChild3 = () => {
