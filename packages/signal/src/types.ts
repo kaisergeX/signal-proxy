@@ -20,7 +20,7 @@ export type SignalSetter<in out T> = {
 };
 
 /** Signals value getter. */
-export type Signal<T> = () => T;
+export type Signal<T> = () => Readonly<T>;
 /** Signal options */
 export type SignalOptions<T> = {
   /**
