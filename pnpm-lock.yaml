@@ -45,8 +45,8 @@ importers:
   apps/playground:
     dependencies:
       '@kaiverse/k':
-        specifier: ^0.3.0
-        version: 0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.6.0
+        version: 0.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@kaiverse/signal-react':
         specifier: workspace:*
         version: link:../../packages/signal-react
@@ -118,6 +118,9 @@ importers:
         specifier: workspace:*
         version: link:../signal
     devDependencies:
+      '@kaiverse/k':
+        specifier: ^0.6.0
+        version: 0.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -804,11 +807,11 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@kaiverse/k@0.3.0':
-    resolution: {integrity: sha512-qTcPhcBXnYBFy8oz3gvu5/22FWSlo9QrwxoiaxJYIcmkF4eo13miMiYcxTGhWBageS0p2xX5Xmq4B18yqZJp5g==}
+  '@kaiverse/k@0.6.0':
+    resolution: {integrity: sha512-3zCbFU24t5uWYdT428g3IyZ8y+x6/ha/Ie4sjSUXz6M3tJhzBMA0CR+KRx1iX2Go+NQhPkDHA4C5g2V79uvXMg==}
     peerDependencies:
-      react: ^18.3.1
-      react-dom: ^18.3.1
+      react: '>=18.3.0 <=19'
+      react-dom: '>=18.3.0 <=19'
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -3286,7 +3289,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@kaiverse/k@0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@kaiverse/k@0.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)

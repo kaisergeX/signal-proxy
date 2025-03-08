@@ -1,8 +1,8 @@
 import {useComputed, useSignal, useSignalEffect, useSyncSignal} from '#hooks';
+import {useAnimateStateChange} from '@kaiverse/k/hooks';
 import {useState} from 'react';
-import {playgroundSignal} from './store';
 import PlaygroundChild3 from './playground-child-3';
-import {useAnimateStateChange} from './hooks';
+import {playgroundSignal} from './store';
 
 const [globalCount, setGlobalCount] = playgroundSignal;
 

@@ -1,8 +1,8 @@
-import {createComputed, createEffect} from '@kaiverse/signal';
 import {useComputed} from '#hooks';
-import {playgroundSignal} from './store';
-import {useAnimateStateChange} from './hooks';
+import {useAnimateStateChange} from '@kaiverse/k/hooks';
+import {createComputed, createEffect} from '@kaiverse/signal';
 import {useRef} from 'react';
+import {playgroundSignal} from './store';
 
 const [globalCount] = playgroundSignal;
 

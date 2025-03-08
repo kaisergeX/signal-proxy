@@ -212,6 +212,6 @@ export function createComputed<R extends Prev, Init, Prev = R>(
   options?: SignalOptions<R>,
 ): Signal<R> {
   const [computedSignal, setComputedSignal] = createSignal<R>(undefined as R, options);
-  createEffect(() => setComputedSignal(computedFn(unTrack(computedSignal))?? initValue as R));
+  createEffect(() => setComputedSignal(computedFn(unTrack(computedSignal)) ?? (initValue as R)));
   return computedSignal;
 }
