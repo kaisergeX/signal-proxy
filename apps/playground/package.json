@@ -14,7 +14,7 @@
     "#*/": "./src/*"
   },
   "dependencies": {
-    "@kaiverse/k": "^0.3.0",
+    "@kaiverse/k": "^0.6.0",
     "@kaiverse/signal-react": "workspace:*",
     "@tailwindcss/vite": "4.0.0-alpha.19",
     "@tanstack/react-router": "^1.76.1",

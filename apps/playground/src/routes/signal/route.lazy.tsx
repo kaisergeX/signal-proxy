@@ -1,9 +1,9 @@
+import {useAnimateStateChange} from '@kaiverse/k/hooks';
+import {useComputed, useSignal, useSignalEffect, useSyncSignal} from '@kaiverse/signal-react';
 import {createLazyFileRoute, Link} from '@tanstack/react-router';
-import {playgroundSignal} from './-utils/store';
-import PlaygroundChild3 from './-components/PlaygroundChild3';
 import {useState} from 'react';
-import {useSignal, useSignalEffect, useComputed, useSyncSignal} from '@kaiverse/signal-react';
-import {useAnimateStateChange} from '#hooks';
+import PlaygroundChild3 from './-components/PlaygroundChild3';
+import {playgroundSignal} from './-utils/store';
 
 export const Route = createLazyFileRoute('/signal')({
   component: SignalPlayground,

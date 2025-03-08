@@ -1,6 +1,6 @@
+import {useAnimateStateChange} from '@kaiverse/k/hooks';
 import {createEffect, useComputed} from '@kaiverse/signal-react';
 import {playgroundSignal} from '../-utils/store';
-import {useAnimateStateChange} from '#hooks';
 
 const [globalCount] = playgroundSignal;
 
