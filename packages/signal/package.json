@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/kaisergeX/signal-proxy/issues"
   },
-  "homepage": "https://github.com/kaisergeX/signal-proxy",
+  "homepage": "https://kaisergex.github.io/kaiverse/utils/signal",
   "publishConfig": {
     "access": "public"
   },
@@ -44,8 +44,8 @@
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "typescript": "^5.5.3",
-    "vite": "^5.4.1",
-    "vite-plugin-dts": "^4.0.3"
+    "typescript": "^5.6.2",
+    "vite": "^5.4.20",
+    "vite-plugin-dts": "^4.5.4"
   }
 }

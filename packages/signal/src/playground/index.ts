@@ -1,5 +1,4 @@
-import {signalProxy} from '../core';
-import {createComputed, createEffect, createSignal, unTrack} from '../utils';
+import {createComputed, createEffect, createSignal} from '../utils';
 import './style.css';
 
 const log = console.log;

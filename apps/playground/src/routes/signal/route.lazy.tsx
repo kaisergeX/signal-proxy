@@ -1,7 +1,7 @@
 import {useAnimateStateChange} from '@kaiverse/k/hooks';
 import {useComputed, useSignal, useSignalEffect, useSyncSignal} from '@kaiverse/signal-react';
 import {createLazyFileRoute, Link} from '@tanstack/react-router';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import PlaygroundChild3 from './-components/PlaygroundChild3';
 import {playgroundSignal} from './-utils/store';
 
@@ -95,7 +95,9 @@ function PlaygroundChild2() {
   const [, forceRerender] = useSignal(undefined, {equals: false}); // same as useReducer((x) => x + 1, 0);
   console.log('PlaygroundChild2 rerendered');
 
-  const flashElement = useAnimateStateChange({
+  const flashElement = useRef<HTMLSpanElement>(null);
+  useAnimateStateChange({
+    ref: flashElement,
     value: computedGlobalCount(),
     keyframes: {opacity: [0.5, 0.2, 1]},
     options: 400,
@@ -109,7 +111,7 @@ function PlaygroundChild2() {
         Global Signal value: <span ref={flashElement}>{computedGlobalCount()}</span>
       </code>
 
-      <button className="button mr-2" type="button" onClick={() => forceRerender()}>
+      <button className="button mr-2" type="button" onClick={forceRerender}>
         Force rerender PlaygroundChild 2
       </button>
     </div>

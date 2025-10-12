@@ -1,6 +1,7 @@
 import {useAnimateStateChange} from '@kaiverse/k/hooks';
 import {createEffect, useComputed} from '@kaiverse/signal-react';
 import {playgroundSignal} from '../-utils/store';
+import {useRef} from 'react';
 
 const [globalCount] = playgroundSignal;
 
@@ -23,7 +24,9 @@ createEffect(() => {
 const PlaygroundChild3 = () => {
   const doubledGlobalCount = useComputed(() => globalCount() * 2);
 
-  const flashElement = useAnimateStateChange({
+  const flashElement = useRef<HTMLSpanElement>(null);
+  useAnimateStateChange({
+    ref: flashElement,
     value: doubledGlobalCount(),
     keyframes: {opacity: [0.5, 0.2, 1]},
     options: 400,

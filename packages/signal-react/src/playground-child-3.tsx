@@ -26,7 +26,7 @@ createEffect(() => {
 
 const PlaygroundChild3 = () => {
   const doubledGlobalCount = useComputed(() => globalCount() * 2);
-  const element = useRef(null);
+  const element = useRef<HTMLElement>(null);
   useAnimateStateChange({
     ref: element,
     value: doubledGlobalCount(),
