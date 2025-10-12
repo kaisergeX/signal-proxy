@@ -46,6 +46,8 @@ Signal is a [`Proxy`](https://developer.mozilla.org/docs/Web/JavaScript/Referenc
 
 ## Documentation
 
+[Usage](https://kaisergex.github.io/kaiverse/utils/signal/)
+
 [Functions & Types](https://jsr.io/@kaiverse/signal/doc)
 
 ## Example

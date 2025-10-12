@@ -1,6 +1,6 @@
 import {useComputed, useSignal, useSignalEffect, useSyncSignal} from '#hooks';
 import {useAnimateStateChange} from '@kaiverse/k/hooks';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import PlaygroundChild3 from './playground-child-3';
 import {playgroundSignal} from './store';
 
@@ -88,7 +88,9 @@ function PlaygroundChild2() {
   const [, forceRerender] = useSignal(undefined, {equals: false});
   console.log('PlaygroundChild2 rerendered');
 
-  const flashElement = useAnimateStateChange({
+  const flashElement = useRef<HTMLElement>(null);
+  useAnimateStateChange({
+    ref: flashElement,
     value: computedGlobalCount(),
     keyframes: {color: ['#86efac', 'inherit']},
     options: 400,
