@@ -30,12 +30,13 @@ export const useSignalEffect = (effect: SignalEffect): void => {
 export const useComputed = <T>(factory: () => T): Signal<T> => {
   const [_, rerender] = useReducer((x) => x + 1, 0);
   const computedSignalRef = useRef<Signal<T>>();
-  if (!computedSignalRef.current) {
+  if (computedSignalRef.current === undefined) {
     computedSignalRef.current = createComputed<T>(() => {
       rerender();
       return factory();
     });
   }
 
+  // eslint-disable-next-line react-hooks/refs
   return computedSignalRef.current;
 };

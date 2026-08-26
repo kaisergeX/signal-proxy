@@ -14,7 +14,7 @@ createEffect(() => {
   );
 });
 
-const double = createComputed(() => createComputed(() => globalCount() * 2)() * 2);
+const double = createComputed(() => globalCount() * 2);
 
 createEffect(() => {
   console.log(

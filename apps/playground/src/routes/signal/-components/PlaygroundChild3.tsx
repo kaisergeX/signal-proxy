@@ -12,6 +12,7 @@ createEffect(() => {
     `globalCount = ${globalCount()}`,
   );
 
+  // test the effect nested warning.
   createEffect(() => {
     console.log(
       '%c[createEffect] Child3',

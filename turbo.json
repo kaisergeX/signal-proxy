@@ -7,6 +7,12 @@
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"]
     },
+    "@kaiverse/signal#build": {
+      "dependsOn": ["^build"],
+      "env": ["NODE_ENV", "MODE", "DEV"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**"]
+    },
     "@kaiverse/signal-react#build": {
       "dependsOn": ["@kaiverse/signal#build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
