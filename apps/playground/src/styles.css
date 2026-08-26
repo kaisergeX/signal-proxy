@@ -5,7 +5,7 @@
 }
 
 @utility button-base {
-  @apply inline-flex cursor-pointer items-center gap-2 rounded-md border border-solid py-2.5 px-3.5 align-top text-sm font-semibold leading-normal shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:focus-visible:outline-zinc-400;
+  @apply inline-flex cursor-pointer items-center gap-2 rounded-md border border-solid px-3.5 py-2.5 align-top text-sm leading-normal font-semibold shadow-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:focus-visible:outline-zinc-400;
 
   &:disabled {
     @apply pointer-events-none cursor-not-allowed opacity-50;

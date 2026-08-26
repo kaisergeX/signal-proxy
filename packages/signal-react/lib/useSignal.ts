@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/refs */
 import {useCallback, useReducer, useRef, useSyncExternalStore} from 'react';
 import {
   createEffect,
@@ -25,7 +26,7 @@ export function useSyncSignal<T>(
   {equals, onChange}: SignalOptions<T | undefined> = {},
 ): SignalFactoryReturnType<T | undefined> {
   const signalRef = useRef<SignalFactoryReturnType<T | undefined>>();
-  if (!signalRef.current) {
+  if (signalRef.current === undefined) {
     signalRef.current = createSignal<T | undefined>(value, {equals, onChange});
   }
 
@@ -62,8 +63,7 @@ export function useSignal<T>(
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
   const signalRef = useRef<SignalFactoryReturnType<T | undefined>>();
 
-  if (!signalRef.current) {
-    // https://react.dev/reference/react/useRef#avoiding-recreating-the-ref-contents
+  if (signalRef.current === undefined) {
     signalRef.current = createSignal<T | undefined>(value, {
       equals,
       onChange: (v) => {
