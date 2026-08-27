@@ -1,3 +1,3 @@
 export {signalProxy} from './core';
-export {unTrack, createComputed, createEffect, createSignal} from './utils';
-export type {SignalFactoryReturnType, Signal, SignalOptions, SignalEffect} from './types';
+export type {Signal, SignalEffect, SignalFactoryReturnType, SignalOptions} from './types';
+export {batch, createComputed, createEffect, createSignal, unTrack} from './utils';

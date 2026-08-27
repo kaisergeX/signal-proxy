@@ -7,7 +7,7 @@
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
     "lint": "tsc --noEmit && eslint src --report-unused-disable-directives --max-warnings 0",
-    "format":"prettier --check \"src/**/*.{ts,tsx,css,md}\"",
+    "format": "prettier --check \"src/**/*.{ts,tsx,css,md}\"",
     "format:fix": "prettier --write \"src/**/*.{ts,tsx,css,md}\"",
     "build": "vite build",
     "preview": "vite preview"
@@ -36,6 +36,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.9.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "^6.0.2",
     "vite": "^8.0.0"
