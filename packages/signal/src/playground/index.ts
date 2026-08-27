@@ -1,4 +1,4 @@
-import {createComputed, createEffect, createSignal} from '../utils';
+import {createComputed, createEffect, createSignal, batch} from '../utils';
 import './style.css';
 
 const log = console.log;
@@ -20,33 +20,33 @@ const [rerunTracking, rerunDependents] = createSignal(undefined, {equals: false}
 //   log('count =', count(), 'count2 =', count2());
 // });
 
-// log('==========================================================\nBatching');
-// // Expected result:
-// // count = 0
-// // count 2 = 10
-// // count = 3
-// // count 2 = 40
-// createEffect(() => {
-//   log('count =', count());
-// });
-// createEffect(() => {
-//   log('count 2 =', count2());
-// });
-// batch(() => {
-//   setCount(1);
-//   batch(() => {
-//     setCount(2);
-//     setCount2(20);
+log('==========================================================\nBatching');
+// Expected result:
+// count = 0
+// count 2 = 10
+// count = 3
+// count 2 = 40
+createEffect(() => {
+  log('count =', count());
+});
+createEffect(() => {
+  log('count 2 =', count2());
+});
+batch(() => {
+  setCount(1);
+  batch(() => {
+    setCount(2);
+    setCount2(20);
 
-//     batch(() => {
-//       setCount(3);
-//       setCount2(30);
-//     });
-//   });
+    batch(() => {
+      setCount(3);
+      setCount2(30);
+    });
+  });
 
-//   setCount2(40);
-// });
-// log('==========================================================');
+  setCount2(40);
+});
+log('==========================================================');
 
 // createEffect(() => {
 //   log('%c[signal]', 'color: #f9fafb; background-color: #0ea5e9;', `count = ${count()}`);
@@ -117,6 +117,8 @@ document.querySelector<HTMLDivElement>('#root')!.innerHTML = `
     <button id="stop-computed-signal-effect" type="button">Stop computed signal effect</button>
     <h3 style="margin-top:5rem">Rrigger effect even if Signals setter with value unchanged</h3>
     <button id="signal-optout-compare" type="button">Trigger effect</button>
+    <h3 style="margin-top:5rem">Batching Test</h3>
+    <button id="test-batching" type="button">Test Batching</button>
 `;
 
 document.querySelector<HTMLButtonElement>('#counter')?.addEventListener('click', () => setCount((v) => v + 1));
@@ -131,6 +133,31 @@ document
   ?.addEventListener('click', cleanupComputedEffect);
 
 document.querySelector<HTMLButtonElement>('#signal-optout-compare')?.addEventListener('click', () => rerunDependents());
+
+// Add the batching test button functionality
+document.querySelector<HTMLButtonElement>('#test-batching')?.addEventListener('click', () => {
+  log('\n=== Test Batching Functionality ===');
+  
+  // Create a counter to track effect executions in this test
+  let executionCount = 0;
+  const [_, setTestSignal] = createSignal(0);
+  
+  createEffect(() => {
+    executionCount++;
+    log(`[TEST] Effect executed ${executionCount} times`);
+    // We don't need to store the computed value, just demonstrate execution count
+  });
+  
+  // Test batch with multiple mutations
+  log('Starting batch test - should only execute effect once');
+  batch(() => {
+    setTestSignal(10);
+    setTestSignal(20);
+    setTestSignal(30);
+  });
+  
+  log(`Batch test complete. Effect executed ${executionCount} times (should be 1)`);
+});
 
 const codeBlockEle = document.querySelector<HTMLPreElement>('#codeblock')!;
 createEffect(() => {

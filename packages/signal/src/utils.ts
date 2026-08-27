@@ -66,11 +66,21 @@ export function batch<T>(batchFn: BatchUpdateFn<T>): T {
     batchingLevel--;
 
     if (batchingLevel === 0) {
-      // only execute pending effects when the outermost batch completes.
-      for (const effect of [...batchedComputations]) {
-        effect.execute();
+      // Process all effects including those added during execution (cascading effects).
+      // We clone the set and clear it before processing so that any new effects added
+      // during execution (e.g., effect A updates signal -> triggers effect B) are caught
+      // in the next while iteration instead of being deferred to the next batch cycle.
+      while (batchedComputations.size > 0) {
+        const effects = [...batchedComputations];
+        batchedComputations.clear();
+        for (const effect of effects) {
+          try {
+            effect.execute();
+          } catch (e) {
+            console.error('Error executing batched effect:', e);
+          }
+        }
       }
-      batchedComputations.clear();
     }
   }
 }
@@ -81,6 +91,9 @@ export function batch<T>(batchFn: BatchUpdateFn<T>): T {
  * @param effectTracking a Effect that will be cleanup
  */
 function cleanupEffect(effectTracking: EffectTracking) {
+  // Remove this effect from batchedComputations if it's in there (prevents memory leaks)
+  batchedComputations.delete(effectTracking);
+
   for (const dep of effectTracking.deps) {
     dep.delete(effectTracking);
   }
@@ -116,9 +129,9 @@ export function createSignal<T>(
         }
       }
     },
-    equals === undefined
+    equals === undefined || equals === true
       ? undefined
-      : (currentValue, newValue) => (typeof equals === 'boolean' ? equals : equals(currentValue.value, newValue.value)),
+      : (currentValue, newValue) => (equals === false ? false : equals(currentValue.value, newValue.value)),
   );
   const getSignalValue: Signal<T | undefined> = () => {
     if (effectTrackingCache) {
@@ -211,7 +224,7 @@ export function createComputed<R extends Prev, Init, Prev = R>(
   initValue?: Init,
   options?: SignalOptions<R>,
 ): Signal<R> {
-  const [computedSignal, setComputedSignal] = createSignal<R>(undefined as R, options);
-  createEffect(() => setComputedSignal(computedFn(unTrack(computedSignal)) ?? (initValue as R)));
+  const [computedSignal, setComputedSignal] = createSignal<R>(initValue as R, options);
+  createEffect(() => setComputedSignal(computedFn(unTrack(computedSignal))));
   return computedSignal;
 }
