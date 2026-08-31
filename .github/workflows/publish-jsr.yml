@@ -6,7 +6,6 @@ on:
       - closed
     branches:
       - main
-  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -17,8 +16,8 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'changeset-release/main')
-    
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'changeset-release/main'
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v6
