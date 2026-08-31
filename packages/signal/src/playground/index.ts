@@ -1,5 +1,8 @@
-import {createComputed, createEffect, createSignal, batch} from '../utils';
+import {batch, createEffect, createSignal} from '../utils';
+import './consumer';
+import {countSignal, countSignal2} from './store';
 import './style.css';
+// const {createEffect, createComputed} = withHMR(import.meta.hot);
 
 const log = console.log;
 
@@ -12,90 +15,13 @@ const log = console.log;
 // signal.prop1 = Number.NEGATIVE_INFINITY;
 // signal.prop2 = 68;
 
-const [count, setCount] = createSignal(0);
-const [count2, setCount2] = createSignal(10);
+const [count, setCount] = countSignal;
+const [count2, setCount2] = countSignal2;
 const [rerunTracking, rerunDependents] = createSignal(undefined, {equals: false});
 
-// createEffect(() => {
-//   log('count =', count(), 'count2 =', count2());
-// });
-
-log('==========================================================\nBatching');
-// Expected result:
-// count = 0
-// count 2 = 10
-// count = 3
-// count 2 = 40
-createEffect(() => {
-  log('count =', count());
-});
-createEffect(() => {
-  log('count 2 =', count2());
-});
-batch(() => {
-  setCount(1);
-  batch(() => {
-    setCount(2);
-    setCount2(20);
-
-    batch(() => {
-      setCount(3);
-      setCount2(30);
-    });
-  });
-
-  setCount2(40);
-});
-log('==========================================================');
-
-// createEffect(() => {
-//   log('%c[signal]', 'color: #f9fafb; background-color: #0ea5e9;', `count = ${count()}`);
-
-//   // Nested createEffect will be ignored and show warning in dev mode
-//   createEffect(() => {
-//     log('[nested] count =', count());
-//   });
-// });
-
-// createEffect(() => {
-//   log('%c[signal]', 'color: #f9fafb; background-color: #0ea5e9;', `count2 = ${count2()}`);
-// });
-
-const doubled = createComputed(
-  (prev) => {
-    log('%c[inside computed]', 'color:#f9fafb; background-color:#059669', 'prev =', prev);
-
-    return count() * 2;
-  },
-  '123',
-  {
-    equals: (prev, next) => {
-      console.log('equals', prev, next);
-
-      return false;
-    },
-  },
-);
 // const doubled = createComputed(() => createComputed(() => count() * 2)() * 2);
-
-createEffect(() => {
-  log('%c[computed signal]', 'color:#f9fafb; background-color:#059669', `doubled = ${doubled()}`);
-});
-
-const cleanupComputedEffect = createEffect(() => {
-  // log(
-  //   '%c[computed signal]',
-  //   'color:#f9fafb; background-color:#059669',
-  //   `doubled = ${doubled()}`,
-  // );
-});
-
 // createEffect(() => {
-//   log(
-//     '%c[unTracked computed result effect]',
-//     'color:white; background-color:black',
-//     `doubled = ${unTrack(() => doubled())}`,
-//   );
+//   log('%c[computed signal]', 'color:#f9fafb; background-color:#059669', `nested doubled = ${doubled()}`);
 // });
 
 createEffect(() => {
@@ -128,35 +54,34 @@ document.querySelector<HTMLButtonElement>('#counter2')?.addEventListener('click'
   setCount2((v) => v + 1);
 });
 
-document
-  .querySelector<HTMLButtonElement>('#stop-computed-signal-effect')
-  ?.addEventListener('click', cleanupComputedEffect);
-
 document.querySelector<HTMLButtonElement>('#signal-optout-compare')?.addEventListener('click', () => rerunDependents());
+
+const [batchTest, setBatchTest] = createSignal(0);
+const [batchTest2, setBatchTest2] = createSignal(0);
 
 // Add the batching test button functionality
 document.querySelector<HTMLButtonElement>('#test-batching')?.addEventListener('click', () => {
   log('\n=== Test Batching Functionality ===');
-  
-  // Create a counter to track effect executions in this test
-  let executionCount = 0;
-  const [_, setTestSignal] = createSignal(0);
-  
-  createEffect(() => {
-    executionCount++;
-    log(`[TEST] Effect executed ${executionCount} times`);
-    // We don't need to store the computed value, just demonstrate execution count
-  });
-  
   // Test batch with multiple mutations
-  log('Starting batch test - should only execute effect once');
   batch(() => {
-    setTestSignal(10);
-    setTestSignal(20);
-    setTestSignal(30);
+    setBatchTest(10);
+    setBatchTest2(batchTest2() + 1);
+    setBatchTest2((v) => v + 1);
+
+    batch(() => {
+      setBatchTest2((v) => v + 2);
+      setBatchTest(20);
+
+      batch(() => {
+        setBatchTest2((v) => v + 2);
+        setBatchTest(30);
+      });
+    });
   });
-  
-  log(`Batch test complete. Effect executed ${executionCount} times (should be 1)`);
+});
+
+createEffect(() => {
+  log('Batching batchTest:', batchTest(), 'batchTest2:', batchTest2());
 });
 
 const codeBlockEle = document.querySelector<HTMLPreElement>('#codeblock')!;
