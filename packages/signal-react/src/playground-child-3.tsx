@@ -1,10 +1,11 @@
-import {useComputed} from '#hooks';
+import {useComputed, useSignalEffect} from '#hooks';
 import {useAnimateStateChange} from '@kaiverse/k/hooks';
-import {createComputed, createEffect} from '@kaiverse/signal';
+import {withHMR} from '@kaiverse/signal';
 import {useRef} from 'react';
 import {playgroundSignal} from './store';
 
 const [globalCount] = playgroundSignal;
+const {createComputed, createEffect} = withHMR(import.meta.hot);
 
 createEffect(() => {
   console.log(
@@ -32,6 +33,10 @@ const PlaygroundChild3 = () => {
     value: doubledGlobalCount(),
     keyframes: {opacity: [0.5, 0.2, 1]},
     options: 400,
+  });
+
+  useSignalEffect(() => {
+    console.log('useSignalEffect doubledGlobalCount', doubledGlobalCount());
   });
 
   return (
