@@ -1,5 +1,18 @@
 # @kaiverse/signal-react
 
+## 0.4.0
+
+### Minor Changes
+
+- 8bb56c6: Fix a bug that causes `useSignal` & `useSyncSignal` trigger related effects on creation.
+- 8438819: Add `useSyncComputed` that integrated with `useSyncExternalStore`.
+
+### Patch Changes
+
+- Updated dependencies [0c9e183]
+- Updated dependencies [0c9e183]
+  - @kaiverse/signal@0.4.0
+
 ## 0.3.1
 
 ### Patch Changes
