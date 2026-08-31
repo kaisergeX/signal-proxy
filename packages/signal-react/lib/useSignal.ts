@@ -23,19 +23,27 @@ export function useSyncSignal<T>(): SignalFactoryReturnType<T | undefined>;
 export function useSyncSignal<T>(value: T, options?: SignalOptions<T>): SignalFactoryReturnType<T>;
 export function useSyncSignal<T>(
   value?: T,
-  {equals, onChange}: SignalOptions<T | undefined> = {},
+  options: SignalOptions<T | undefined> = {},
 ): SignalFactoryReturnType<T | undefined> {
   const signalRef = useRef<SignalFactoryReturnType<T | undefined>>();
   if (signalRef.current === undefined) {
-    signalRef.current = createSignal<T | undefined>(value, {equals, onChange});
+    signalRef.current = createSignal<T | undefined>(value, options);
   }
 
   const externalSubscribe = useCallback<Parameters<typeof useSyncExternalStore>[0]>(
-    (onStoreChange) =>
-      createEffect(() => {
+    (onStoreChange) => {
+      // createEffect's body runs immediately and synchronously on creation
+      // so skip onStoreChange since nothing has changed yet
+      let isFirstRun = true;
+      return createEffect(() => {
         signalRef.current?.[0]();
+        if (isFirstRun) {
+          isFirstRun = false;
+          return;
+        }
         onStoreChange();
-      }),
+      });
+    },
     [],
   );
 
@@ -62,12 +70,14 @@ export function useSignal<T>(
 ): SignalFactoryReturnType<T | undefined> {
   const [_, forceUpdate] = useReducer((x) => x + 1, 0);
   const signalRef = useRef<SignalFactoryReturnType<T | undefined>>();
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange; // always the latest closure
 
   if (signalRef.current === undefined) {
     signalRef.current = createSignal<T | undefined>(value, {
       equals,
       onChange: (v) => {
-        onChange?.(v);
+        onChangeRef.current?.(v);
         forceUpdate();
       },
     });

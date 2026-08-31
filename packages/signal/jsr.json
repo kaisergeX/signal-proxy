@@ -3,11 +3,16 @@
     "version": "${version}",
     "exports": "./src/index.ts",
     "publish": {
+        "include": [
+            "LICENSE",
+            "README.md",
+            "CHANGELOG.md",
+            "package.json",
+            "src/**/*.ts"
+        ],
         "exclude": [
-            "vite.config.ts",
-            "tsconfig.json",
-            "index.html",
-            "./src/vite-env.d.ts"
+            "src/vite-env.d.ts",
+            "src/playground"
         ]
     }
 }
