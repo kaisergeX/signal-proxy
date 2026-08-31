@@ -282,7 +282,9 @@ export function createComputed<R extends Prev, Init, Prev = R>(
  * @param hot the module's HMR context, or `undefined` outside dev/HMR-enabled builds.
  * @returns `createEffect`/`createComputed` with identical signatures to the originals, scoped to this module's HMR lifecycle.
  */
-export function withHMR(hot: HmrContext | undefined) {
+export function withHMR(
+  hot: HmrContext | undefined,
+): Readonly<{createEffect: typeof createEffect; createComputed: typeof createComputed}> {
   if (!isHmrContext(hot)) {
     if (IS_DEV) {
       console.warn(

@@ -20,6 +20,7 @@
     "check-types": "turbo run check-types",
     "clean": "rm -rf {node_modules,.turbo} && pnpm -r exec rm -rf {node_modules,dist,.turbo}",
     "cs": "changeset",
+    "dry-publish:jsr": "cd ./packages/signal && pnpm dlx jsr publish --dry-run --allow-dirty",
     "publish:npm": "turbo run build lint --filter=@kaiverse/* && pnpm publish --filter '@kaiverse/*' --access public && changeset tag",
     "publish:jsr": "cd ./packages/signal && pnpm dlx jsr publish",
     "publish:jsr-react-adapter": "cd ./packages/signal-react && pnpm dlx jsr publish"
