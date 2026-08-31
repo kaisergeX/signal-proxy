@@ -13,11 +13,14 @@ jobs:
   publish-jsr:
     name: Publish to JSR
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'changeset-release/main'
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
