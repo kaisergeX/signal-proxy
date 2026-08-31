@@ -1,5 +1,12 @@
 # @kaiverse/signal
 
+## 0.4.0
+
+### Minor Changes
+
+- 0c9e183: Add `batch` API and enhance cleanup mechanism.
+- 0c9e183: Add `withHMR` API and `hot` options for computeds & effects as a workaround to adapt with HMR mode in DEV. A dedicated bundler plugin that automates both is planned.
+
 ## 0.3.1
 
 ### Patch Changes
