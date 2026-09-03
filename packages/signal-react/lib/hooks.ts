@@ -30,6 +30,9 @@ export const useSignalEffect = (effect: SignalEffect): void => {
  * ___
  * The value returned is always the stable Signal getter.
  * Shares `useSyncSignal`'s concurrent rendering caveats, since both are `uSES`-backed.
+ * ___
+ * If `factory` just reads a single existing Signal without deriving anything new (e.g. `useSyncComputed(() => globalCount())`), 
+ * prefer `{@link useSyncSignalValue}` instead — no extra `createComputed` hop, no owned resource to tear down.
  *
  * @param factory computes the derived value from other Signals. Re-evaluated whenever a Signal it reads changes.
  *   Always sees the latest closure — safe to reference props/state from the current render.
@@ -96,12 +99,13 @@ export function useSyncComputed<T>(
  * Consider using {@link useSyncComputed}, which uses `useSyncExternalStore` and solves tearing,
  * but doesn't work well with concurrent rendering. It's a trade-off - choose wisely.
  * ___
+ * If `factory` just reads a single existing Signal without deriving anything new (e.g. `useComputed(() => globalCount())`), 
+ * prefer `{@link useSignalValue}` instead — no extra `createComputed` hop, no owned resource to tear down.
+ *
  * @param factory Computes the derived value.
- * Only reacts to Signals read inside it — plain React state/props are invisible to it.
- * Reading them is fine, but changes won't trigger a recompute; the old value sticks around
- * until some Signal change causes a recompute, which then picks up whatever they currently are.
- * To make a computed react to a React value, mirror it into a Signal first
- * (e.g. `useEffect(() => setSomeSignal(value), [value])`). But why?
+ * Only reacts to Signals read inside it — plain React state/props are invisible to it. Reading them is fine, but changes won't trigger a recompute;
+ * the old value sticks around until some Signal change causes a recompute, which then picks up whatever they currently are.
+ * To make a computed react to a React value, mirror it into a Signal first (e.g. `useEffect(() => setSomeSignal(value), [value])`). But why?
  * @param options `equals` to customize change comparison, same as `createSignal`.
  */
 // Created once on first render and torn down on unmount (deferred + cancellable, see the effect below).
