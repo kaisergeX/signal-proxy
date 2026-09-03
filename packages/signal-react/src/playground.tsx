@@ -1,6 +1,6 @@
-import {useComputed, useSignal, useSignalEffect, useSyncSignal} from '#hooks';
+import {useSignal, useSignalEffect, useSignalValue, useSyncSignal} from '#hooks';
 import {useAnimateStateChange} from '@kaiverse/k/hooks';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import PlaygroundChild3 from './playground-child-3';
 import {playgroundSignal} from './store';
 
@@ -84,24 +84,36 @@ function PlaygroundChild1() {
 }
 
 function PlaygroundChild2() {
-  const computedGlobalCount = useComputed(globalCount);
+  const computedGlobalCount = useSignalValue(globalCount);
   const [, forceRerender] = useSignal(undefined, {equals: false});
   console.log('PlaygroundChild2 rerendered');
 
   const flashElement = useRef<HTMLElement>(null);
   useAnimateStateChange({
     ref: flashElement,
-    value: computedGlobalCount(),
+    value: computedGlobalCount,
     keyframes: {color: ['#86efac', 'inherit']},
     options: 400,
   });
+
+  useSignalEffect(() => {
+    console.log('PlaygroundChild2 useSignalEffect', computedGlobalCount);
+  });
+
+  useEffect(() => {
+    console.log('PlaygroundChild2 useEffect computedGlobalCount =', computedGlobalCount);
+
+    return () => {
+      console.log('PlaygroundChild2 useeffect cleanup');
+    };
+  }, [computedGlobalCount]);
 
   return (
     <div>
       <h2>PlaygroundChild 2</h2>
 
       <pre>
-        Global Signal value: <strong ref={flashElement}>{computedGlobalCount()}</strong>
+        Global Signal value: <strong ref={flashElement}>{computedGlobalCount}</strong>
       </pre>
 
       <button type="button" onClick={() => forceRerender()}>

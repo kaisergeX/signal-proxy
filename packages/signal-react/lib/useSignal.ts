@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/refs */
-import {useCallback, useReducer, useRef, useSyncExternalStore} from 'react';
 import {
   createEffect,
   createSignal,
+  type Signal,
   type SignalFactoryReturnType,
   type SignalOptions,
 } from '@kaiverse/signal';
+import {useCallback, useEffect, useReducer, useRef, useSyncExternalStore} from 'react';
 
 /**
  * Use `Signal` inside React component. `useSyncSignal` is integrated with `useSyncExternalStore` (`uSES`) which is a recommended way to use "external stores" in React.
@@ -84,4 +85,77 @@ export function useSignal<T>(
   }
 
   return signalRef.current;
+}
+
+/**
+ * Reads the current value of an already-existing Signal inside a React component.
+ * 
+ * Returns a plain reactive value, that acts like React state, not a Signal — it's no longer trackable by `useSignalEffect`/`useSyncComputed`.
+ * If you need tracking elsewhere (e.g. inside `useSignalEffect`), use the original Signal directly or `useSyncComputed` instead — don't pass this hook's return value into it.
+ * ___
+ * Use this to consume a Signal created *outside* the component (a module-level store, or one  returned by another hook) — as opposed to `useSignal`/`useSyncSignal`,
+ * which both *create and own* a Signal local to the component.
+ *
+ * Lighter than `useSyncComputed(signal)` for this case: no wrapping `createComputed`, so no extra recompute hop and no owned resource to tear down on unmount — just a direct subscription.
+ * ___
+ * Uses `useSyncExternalStore`, same trade-offs as {@link useSyncSignal} (solves tearing, but doesn't work well with concurrent rendering).
+ * See {@link useSignalValue} for the `useReducer`-backed twin.
+ *
+ * @param signal a Signal, expected to be a **stable reference** across renders (e.g. a module-level export).
+ *  Passing a fresh Signal created inline every render works but resubscribes on every render for no benefit — hoist it out instead.
+ */
+export function useSyncSignalValue<T>(signal: Signal<T>): ReturnType<Signal<T>> {
+  const signalRef = useRef(signal);
+  signalRef.current = signal;
+
+  const externalSubscribe = useCallback<Parameters<typeof useSyncExternalStore>[0]>(
+    (onStoreChange) => {
+      let isFirstRun = true;
+      return createEffect(() => {
+        signalRef.current();
+        if (isFirstRun) {
+          isFirstRun = false;
+          return;
+        }
+        onStoreChange();
+      });
+    },
+    [],
+  );
+
+  return useSyncExternalStore(externalSubscribe, signalRef.current);
+}
+
+/**
+ * Reads the current value of an already-existing Signal inside a React component.
+ *
+ * Returns a plain reactive value, that acts like React state, not a Signal — it's no longer trackable by `useSignalEffect`/`useComputed`.
+ * If you need tracking elsewhere (e.g. inside `useSignalEffect`), use the original Signal directly or `useComputed` instead — don't pass this hook's return value into it.
+ * ___
+ * `useSignalValue` uses `useReducer` to trigger a re-render on change. It works better with concurrent rendering but has the temporary tearing issue.
+ *
+ * Consider using {@link useSyncSignalValue}, which uses `useSyncExternalStore` and solves tearing,
+ * but doesn't work well with concurrent rendering. It's a trade-off — choose wisely.
+ * ___
+ * @param signal a Signal, expected to be a **stable reference** across renders. (e.g. a module-level export).
+ *  Passing a fresh Signal created inline every render works but resubscribes on every render for no benefit — hoist it out instead.
+ */
+export function useSignalValue<T>(signal: Signal<T>): ReturnType<Signal<T>> {
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  const signalRef = useRef(signal);
+  signalRef.current = signal;
+
+  useEffect(() => {
+    let isFirstRun = true;
+    return createEffect(() => {
+      signalRef.current();
+      if (isFirstRun) {
+        isFirstRun = false;
+        return;
+      }
+      forceUpdate();
+    });
+  }, []);
+
+  return signal();
 }
