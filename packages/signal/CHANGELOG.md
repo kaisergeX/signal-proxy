@@ -1,5 +1,12 @@
 # @kaiverse/signal
 
+## 0.5.0
+
+### Minor Changes
+
+- 26669db: `signalProxy`!: The default values comparison logic now use strict equality (`===`) instead of `Object.is`
+- 1e150da: `signalProxy`!: callback is now optional, 3rd args become an options object instead of comparision function.
+
 ## 0.4.0
 
 ### Minor Changes

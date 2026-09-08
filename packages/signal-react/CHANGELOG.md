@@ -1,5 +1,18 @@
 # @kaiverse/signal-react
 
+## 0.5.0
+
+### Minor Changes
+
+- 1e150da: `signalProxy`!: callback is now optional, 3rd args become an options object instead of comparision function.
+- d75b87a: Add `useSyncSignalValue` & `useSignalValue` hooks. If just read from a single Signal without deriving, prefer these instead of computed hooks.
+
+### Patch Changes
+
+- Updated dependencies [26669db]
+- Updated dependencies [1e150da]
+  - @kaiverse/signal@0.5.0
+
 ## 0.4.0
 
 ### Minor Changes
