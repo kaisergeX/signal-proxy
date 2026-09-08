@@ -31,7 +31,7 @@ export const useSignalEffect = (effect: SignalEffect): void => {
  * The value returned is always the stable Signal getter.
  * Shares `useSyncSignal`'s concurrent rendering caveats, since both are `uSES`-backed.
  * ___
- * If `factory` just reads a single existing Signal without deriving anything new (e.g. `useSyncComputed(() => globalCount())`), 
+ * If `factory` just reads a single existing Signal without deriving anything new (e.g. `useSyncComputed(() => globalCount())`),
  * prefer `{@link useSyncSignalValue}` instead — no extra `createComputed` hop, no owned resource to tear down.
  *
  * @param factory computes the derived value from other Signals. Re-evaluated whenever a Signal it reads changes.
@@ -55,10 +55,10 @@ export function useSyncComputed<T>(
   const isFirstRunRef = useRef(true);
 
   if (computedRef.current === undefined) {
-    computedRef.current = createComputed(() => factoryRef.current(), undefined, {
+    computedRef.current = createComputed(() => factoryRef.current(), factoryRef.current(), {
       ...options,
       onChange: () => {
-        // `createComputed`'s internal effect runs once immediately on creation (how dependency tracking works) 
+        // `createComputed`'s internal effect runs once immediately on creation (how dependency tracking works)
         // — that first onChange fires with nothing having actually changed for the consumer; skip it so uSES doesn't force a re-render right after mount.
         if (isFirstRunRef.current) {
           isFirstRunRef.current = false;
@@ -99,7 +99,7 @@ export function useSyncComputed<T>(
  * Consider using {@link useSyncComputed}, which uses `useSyncExternalStore` and solves tearing,
  * but doesn't work well with concurrent rendering. It's a trade-off - choose wisely.
  * ___
- * If `factory` just reads a single existing Signal without deriving anything new (e.g. `useComputed(() => globalCount())`), 
+ * If `factory` just reads a single existing Signal without deriving anything new (e.g. `useComputed(() => globalCount())`),
  * prefer `{@link useSignalValue}` instead — no extra `createComputed` hop, no owned resource to tear down.
  *
  * @param factory Computes the derived value.
@@ -123,7 +123,7 @@ export function useComputed<T>(
 
   const computedRef = useRef<ReturnType<typeof createComputed<T>>>();
   if (computedRef.current === undefined) {
-    computedRef.current = createComputed(() => factoryRef.current(), undefined, {
+    computedRef.current = createComputed(() => factoryRef.current(), factoryRef.current(), {
       ...options,
       onChange: () => {
         if (isFirstRunRef.current) {

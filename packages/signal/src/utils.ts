@@ -152,9 +152,10 @@ export function createSignal<T>(
         }
       }
     },
-    equals === undefined || equals === true
-      ? undefined
-      : (currentValue, newValue) => (equals === false ? false : equals(currentValue.value, newValue.value)),
+    {
+      shouldUpdate:
+        typeof equals === 'function' ? (_, currentValue, newValue) => !equals(currentValue, newValue) : true,
+    },
   );
   const getSignalValue: Signal<T | undefined> = () => {
     if (effectTrackingCache) {
@@ -250,16 +251,16 @@ export function createEffect(effectFn: SignalEffect, options?: EffectOptions): C
 // If specify type for `prev` like this `createComputed((prev: string) => 123, 'string')`, type guard is working, a type error will be shown correctly since `prev` should be `string | number`.
 // But when computedFn defined like this `createComputed((prev) => 123, 0)`, `prev` type is `unknown`, still not found a proper way to infer it correctly.
 // For now, `prev` type should be explicitly defined to get type hint (`createComputed((prev: string | number) => 123, 'string')`).
-export function createComputed<R, Prev extends R = R>(
+export function createComputed<R extends Prev, Prev = R>(
   computedFn: (prev: undefined | NoInfer<Prev>) => R,
 ): ComputedSignal<R>;
 export function createComputed<R extends Prev, Init = R, Prev = R>(
-  computedFn: (prev: Prev | Init) => R,
+  computedFn: (prev: Init | Prev) => R,
   initValue: Init,
   options?: ComputedOptions<R>,
 ): ComputedSignal<R>;
-export function createComputed<R extends Prev, Init, Prev = R>(
-  computedFn: (prev: Prev | Init) => R,
+export function createComputed<R extends Prev, Init, Prev>(
+  computedFn: (prev: Init | Prev) => R,
   initValue?: Init,
   options?: ComputedOptions<R>,
 ): ComputedSignal<R> {
