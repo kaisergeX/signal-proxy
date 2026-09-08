@@ -1,6 +1,6 @@
 {
   "name": "@kaiverse/signal-react",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "React adapter for @kaiverse/signal",
   "author": "Vu Duc Khai",
   "license": "MIT",
