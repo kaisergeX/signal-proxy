@@ -7,7 +7,12 @@ export type HmrContext = {
 
 /** Signal Proxy on update callback */
 export type SignalUpdateCallback<T extends ObjectAny> = (property: keyof T, value: T[keyof T]) => void;
-
+/** Signal Proxy value comparison fn */
+export type SignalProxyComparisonFn<in T> = <K extends keyof T>(
+  property: K,
+  currentValue: T[K],
+  newValue: T[K],
+) => boolean;
 /** Signal Proxy's options */
 export type SignalProxyOptions<in T extends ObjectAny> = {
   /**
@@ -21,15 +26,15 @@ export type SignalProxyOptions<in T extends ObjectAny> = {
    * @param currentValue the current value of the property
    * @param newValue the new value being set
    */
-  shouldUpdate?: boolean | (<K extends keyof T>(property: K, currentValue: T[K], newValue: T[K]) => boolean);
+  shouldUpdate?: boolean | SignalProxyComparisonFn<T>;
 };
 
 /**
  * Customize Signal comparison
  *
- * @default Object.is
+ * By default, compares values using strict equality (`===`).
  */
-type SignalComparison<in T> = (currentValue: T, newValue: T) => boolean;
+type SignalComparisonFn<in T> = (currentValue: T, newValue: T) => boolean;
 export type SignalSetterCb<in out T> = (prevValue: T) => T;
 // export type SignalSetter<in out T> = (value: T | SignalSetterCb<T>) => T;
 export type SignalSetter<in out T> = {
@@ -47,9 +52,9 @@ export type SignalOptions<T> = {
    * - If `false`, the signal will always update, and rerun related dependents (Effects, Computed Signals) after the setter is called regardless of value equality.
    * - If providing a custom function, it should be pure and returns `false` to trigger update, otherwise `true`.
    *
-   * @default Object.is
+   * By default, compares values using strict equality (`===`).
    */
-  equals?: false | SignalComparison<T>;
+  equals?: false | SignalComparisonFn<T>;
   /** Runs whenever Signal value changes */
   onChange?: (newValue: T) => void;
 };

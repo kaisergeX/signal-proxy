@@ -1,4 +1,7 @@
-import type {ObjectAny, SignalProxyOptions, SignalUpdateCallback} from './types';
+import type {ObjectAny, SignalProxyComparisonFn, SignalProxyOptions, SignalUpdateCallback} from './types';
+
+/** The default comparison fn */
+const comparisonFn: SignalProxyComparisonFn<unknown> = (_prop, v1, v2) => v1 === v2;
 
 /** Create a Signal Proxy. It track a `initialValue` object that changes over time. */
 export function signalProxy<T extends ObjectAny = ObjectAny>(
@@ -10,7 +13,7 @@ export function signalProxy<T extends ObjectAny = ObjectAny>(
     throw new TypeError('signalProxy requires an object value');
   }
 
-  const shouldUpdate = options.shouldUpdate === undefined ? Object.is : options.shouldUpdate;
+  const shouldUpdate = options.shouldUpdate === undefined ? comparisonFn : options.shouldUpdate;
   const handler: ProxyHandler<T> = {
     get(target, prop, receiver) {
       return Reflect.get(target, prop, receiver);
