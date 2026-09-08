@@ -6,14 +6,25 @@ import './style.css';
 
 const log = console.log;
 
-// const signal = signalProxy({prop1: 0, prop2: 1}, (key, value) => {
-//   log('%c[signal proxy]', 'color:#0ea5e9', `change: ${key} = ${value}`);
-//   if (key === 'prop2') {
-//     log('prop2 updated - do sth with it');
-//   }
-// });
+// const signal = signalProxy(
+//   {prop1: 0, prop2: 1},
+//   (key, value) => {
+//     log('%c[signal proxy]', 'color:#0ea5e9', `change: ${key} = ${value}`);
+//     if (key === 'prop2') {
+//       log('prop2 updated - do sth with it');
+//     }
+//   },
+//   {
+//     shouldUpdate: (property, currentValue, newValue) => {
+//       log('shouldUpdate', property, currentValue, newValue, signal);
+//       return true;
+//     },
+//   },
+// );
 // signal.prop1 = Number.NEGATIVE_INFINITY;
+// log(signal);
 // signal.prop2 = 68;
+// log(signal);
 
 const [count, setCount] = countSignal;
 const [count2, setCount2] = countSignal2;

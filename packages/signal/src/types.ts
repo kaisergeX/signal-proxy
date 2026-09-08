@@ -1,17 +1,35 @@
+/** Any plain object */
 export type ObjectAny = Record<PropertyKey, unknown>;
 /** The HMR context a bundler exposes per-module: `import.meta.hot` (Vite) or `module.hot` (webpack/Rspack). */
 export type HmrContext = {
   dispose(cb: () => void): void;
 };
 
+/** Signal Proxy on update callback */
 export type SignalUpdateCallback<T extends ObjectAny> = (property: keyof T, value: T[keyof T]) => void;
+
+/** Signal Proxy's options */
+export type SignalProxyOptions<in T extends ObjectAny> = {
+  /**
+   * Whether the Signal value mutation is allowed to update the property value or not.
+   *
+   * - `true` to allow the update.
+   * - `false` to skip the update.
+   * - Same with the custom function if provided.
+   *
+   * @param property the property key that changed
+   * @param currentValue the current value of the property
+   * @param newValue the new value being set
+   */
+  shouldUpdate?: boolean | (<K extends keyof T>(property: K, currentValue: T[K], newValue: T[K]) => boolean);
+};
 
 /**
  * Customize Signal comparison
  *
  * @default Object.is
  */
-export type SignalCompareEqual<in T> = (currentValue: T, newValue: T) => boolean;
+type SignalComparison<in T> = (currentValue: T, newValue: T) => boolean;
 export type SignalSetterCb<in out T> = (prevValue: T) => T;
 // export type SignalSetter<in out T> = (value: T | SignalSetterCb<T>) => T;
 export type SignalSetter<in out T> = {
@@ -24,13 +42,14 @@ export type Signal<T> = () => Readonly<T>;
 /** Signal options */
 export type SignalOptions<T> = {
   /**
-   * Customize Signal comparison
+   * Customize Signal comparison. Whether the Signal should update or not.
    * ___
-   * If `false`, always rerun related dependents (Effects, Computed Signals) after the setter is called even if the new value is equal to the current value.
+   * - If `false`, the signal will always update, and rerun related dependents (Effects, Computed Signals) after the setter is called regardless of value equality.
+   * - If providing a custom function, it should be pure and returns `false` to trigger update, otherwise `true`.
    *
    * @default Object.is
    */
-  equals?: boolean | SignalCompareEqual<T>;
+  equals?: false | SignalComparison<T>;
   /** Runs whenever Signal value changes */
   onChange?: (newValue: T) => void;
 };
